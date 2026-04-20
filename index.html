@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepan Pramanick | AI Engineer & Web Developer</title>
+    
+    <!-- Professional Monospace & Sans-Serif Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* =========================================
+           Dark Neomorphic & Terminal Theme Variables
+           ========================================= */
+        :root {
+            --bg-color: #16181d;
+            --surface: #1b1d24;
+            --surface-light: #22262f;
+            --text-main: #d1d5db;
+            --text-muted: #6b7280;
+            --accent: #00f2fe;
+            --accent-glow: rgba(0, 242, 254, 0.25);
+            
+            /* Sleek Neomorphic Shadows */
+            --neo-out: 7px 7px 14px #101216, -7px -7px 14px #1c1e24;
+            --neo-out-hover: 10px 10px 20px #0e0f12, -10px -10px 20px #1e2128;
+            --neo-in: inset 5px 5px 10px #101216, inset -5px -5px 10px #1c1e24;
+            --neo-in-deep: inset 8px 8px 16px #0e0f12, inset -8px -8px 16px #1e2128;
+
+            --font-code: 'Fira Code', monospace;
+            --font-ui: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #2d313a; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-ui);
+            font-size: 13px; 
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 { font-weight: 500; }
+        .code-font { font-family: var(--font-code); }
+
+        /* =========================================
+           3D Background Matrix
+           ========================================= */
+        #matrix-canvas {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: -2; opacity: 0.35; pointer-events: none;
+        }
+        
+        .ambient-orb {
+            position: fixed; border-radius: 50%; filter: blur(100px);
+            z-index: -1; opacity: 0.12; pointer-events: none;
+            animation: floatOrb 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .orb-1 { width: 45vw; height: 45vw; background: var(--accent); top: -10%; left: -10%; }
+        .orb-2 { width: 35vw; height: 35vw; background: #4facfe; bottom: -10%; right: -10%; animation-delay: -7s; }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(80px, 80px) scale(1.15); }
+        }
+
+        /* =========================================
+           Skeleton Loading Screen
+           ========================================= */
+        #skeleton-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--bg-color); z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
+        }
+
+        #skeleton-screen.slide-up {
+            transform: translateY(-100%);
+            opacity: 0;
+        }
+        
+        .skel-pulse {
+            background: linear-gradient(90deg, #16181d 0%, #1f2229 50%, #16181d 100%);
+            background-size: 200% 100%;
+            animation: pulse 1.5s infinite linear;
+            border-radius: 6px; box-shadow: var(--neo-in);
+        }
+
+        .skel-avatar { width: 130px; height: 130px; border-radius: 50%; margin-bottom: 2rem; }
+        .skel-title { width: 220px; height: 25px; margin-bottom: 1rem; }
+        .skel-subtitle { width: 160px; height: 12px; margin-bottom: 2rem; }
+        .skel-line { width: 80%; max-width: 450px; height: 10px; margin-bottom: 0.8rem; }
+        .skel-line.short { width: 60%; max-width: 250px; }
+
+        @keyframes pulse { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        #main-content {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        #main-content.loaded { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           Section Appearing Animations
+           ========================================= */
+        .reveal-section {
+            opacity: 0; transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-section.visible { opacity: 1; transform: translateY(0); }
+        
+        .stagger-item { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .stagger-item.visible { opacity: 1; transform: translateY(0); }
+
+        /* =========================================
+           Hero Section
+           ========================================= */
+        #hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 2rem; position: relative;
+        }
+
+        .avatar-container {
+            width: 150px; height: 150px; border-radius: 50%;
+            box-shadow: var(--neo-out); padding: 5px; margin-bottom: 2rem;
+            position: relative;
+        }
+        .avatar-container img {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            box-shadow: var(--neo-in); filter: contrast(1.05) grayscale(15%);
+        }
+        .status-dot {
+            position: absolute; bottom: 10px; right: 10px;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #00ff88; box-shadow: 0 0 10px #00ff88;
+            border: 2px solid var(--bg-color);
+        }
+        
+        .type-name-container {
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        h1.dev-name { 
+            font-size: clamp(1.8rem, 4vw, 3rem); 
+            color: var(--accent);
+            overflow: hidden; 
+            white-space: nowrap; 
+            border-right: 0.15em solid var(--accent);
+            margin: 0 auto;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .typing-active {
+            animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
+        }
+        .typing-done {
+            border-right: 0.15em solid transparent;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent); } }
+
+        .dev-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-bio { max-width: 580px; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        
+        .social-dock {
+            display: flex; gap: 1rem; padding: 10px 20px;
+            border-radius: 30px; box-shadow: var(--neo-out); background: var(--surface);
+        }
+        .social-btn {
+            color: var(--text-muted); font-size: 1.2rem; transition: 0.3s;
+            text-decoration: none; width: 38px; height: 38px;
+            display: flex; justify-content: center; align-items: center;
+            border-radius: 50%;
+        }
+        .social-btn:hover { color: var(--accent); box-shadow: var(--neo-in); transform: scale(0.95); }
+
+        /* =========================================
+           General Section Styling
+           ========================================= */
+        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        
+        .section-heading {
+            text-align: center; font-size: 1.8rem; margin-bottom: 3.5rem;
+            color: var(--text-main); position: relative; letter-spacing: 1px;
+            min-height: 35px; 
+        }
+        .section-heading::after {
+            content: ''; display: block; width: 35px; height: 2px;
+            background: var(--accent); border-radius: 2px;
+            margin: 15px auto 0; box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        /* =========================================
+           Skills Section
+           ========================================= */
+        .skills-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
+        }
+        .skill-box {
+            padding: 1.8rem; border-radius: 12px; box-shadow: var(--neo-out);
+            background: var(--surface); border: 1px solid rgba(255,255,255,0.01);
+        }
+        .skill-box h3 { margin-bottom: 1.2rem; color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
+        .neo-pill-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .neo-pill {
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;
+            box-shadow: var(--neo-out); color: var(--text-muted);
+            transition: all 0.3s; cursor: default; background: var(--bg-color);
+        }
+        .neo-pill:hover { box-shadow: var(--neo-in); color: var(--accent); }
+
+        /* =========================================
+           Projects - Moving Carousel
+           ========================================= */
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-btn {
+            position: absolute;
+            z-index: 10;
+            background: var(--surface-light);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--accent);
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: var(--neo-out);
+            transition: all 0.3s;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem;
+        }
+        .nav-btn:hover { box-shadow: var(--neo-in); transform: scale(0.95); color: #fff;}
+        .nav-btn.left { left: -22px; }
+        .nav-btn.right { right: -22px; }
+
+        .project-carousel {
+            display: flex; gap: 2rem; overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 15px 5px 30px 5px;
+            width: 100%;
+            -ms-overflow-style: none; scrollbar-width: none;
+            cursor: grab;
+        }
+        .project-carousel::-webkit-scrollbar { display: none; }
+        .project-carousel.active { cursor: grabbing; }
+
+        .terminal-card {
+            min-width: 320px; max-width: 320px;
+            flex-shrink: 0;
+            background: var(--surface); border-radius: 10px;
+            box-shadow: var(--neo-out); overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer; display: flex; flex-direction: column;
+            border: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .terminal-header {
+            background: #121418; padding: 8px 12px;
+            display: flex; align-items: center; gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        
+        .terminal-body { padding: 18px; box-shadow: var(--neo-in); margin: 10px; border-radius: 6px; flex-grow: 1; }
+
+        .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--accent); min-height: 24px;}
+        .terminal-card p.desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; opacity: 0; transition: opacity 0.5s ease 1s; }
+        .terminal-card.typed p.desc { opacity: 1; }
+
+        .tech-row { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; opacity: 0; transition: opacity 0.5s ease 1.2s;}
+        .terminal-card.typed .tech-row { opacity: 1; }
+        .tech-tag {
+            font-size: 0.65rem; padding: 3px 8px; border-radius: 3px;
+            background: #121418; color: var(--text-main); font-family: var(--font-code);
+            border: 1px solid rgba(0, 242, 254, 0.1);
+        }
+
+        .view-btn {
+            text-align: center; padding: 12px; font-size: 0.8rem; font-family: var(--font-code);
+            color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05);
+            background: transparent; border-left: none; border-right: none; border-bottom: none;
+            cursor: pointer; transition: 0.3s;
+        }
+        .view-btn:hover { background: rgba(0, 242, 254, 0.05); color: var(--accent); }
+
+        .terminal-card:hover { transform: translateY(-6px); box-shadow: var(--neo-out-hover); border-color: rgba(0, 242, 254, 0.15); }
+        .terminal-card.clicked { animation: breatheClick 0.5s ease-in-out; }
+
+        /* =========================================
+           Visual Arts Gallery
+           ========================================= */
+        .image-grid { column-count: 3; column-gap: 1.2rem; }
+        .img-wrapper {
+            break-inside: avoid; margin-bottom: 1.2rem;
+            box-shadow: var(--neo-out); padding: 6px; border-radius: 10px;
+            cursor: pointer; transition: transform 0.3s; background: var(--surface);
+        }
+        .img-wrapper:hover { transform: scale(1.02); box-shadow: var(--neo-out-hover); }
+        .img-wrapper img {
+            width: 100%; height: auto; display: block;
+            border-radius: 5px; box-shadow: var(--neo-in);
+            filter: grayscale(40%) contrast(1.1); transition: 0.4s;
+        }
+        .img-wrapper:hover img { filter: grayscale(0%); }
+
+        /* =========================================
+           Achievements Section
+           ========================================= */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .achieve-card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: var(--neo-out);
+            border: 1px solid rgba(255,255,255,0.02);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .achieve-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--neo-out-hover);
+            border-color: rgba(0, 242, 254, 0.15);
+        }
+        .rank-badge {
+            font-family: var(--font-code);
+            font-size: 1.2rem;
+            font-weight: 700;
+            width: 55px;
+            height: 55px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: var(--bg-color);
+            box-shadow: var(--neo-in);
+        }
+        .rank-badge.gold { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+        .rank-badge.silver { color: #c0c0c0; text-shadow: 0 0 10px rgba(192,192,192,0.4); }
+        .rank-badge.bronze { color: #cd7f32; text-shadow: 0 0 10px rgba(205,127,50,0.4); }
+        .achieve-info h3 { font-size: 0.95rem; color: var(--text-main); line-height: 1.4; }
+
+        /* =========================================
+           Modals
+           ========================================= */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: rgba(22, 24, 29, 0.85); backdrop-filter: blur(6px);
+            z-index: 2000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .modal-window {
+            width: 90%; max-width: 850px; max-height: 85vh;
+            background: var(--bg-color); border-radius: 10px;
+            box-shadow: var(--neo-out-hover); overflow: hidden;
+            display: flex; flex-direction: column;
+            transform: scale(0.95) translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0, 242, 254, 0.1);
+        }
+        .modal-overlay.active .modal-window { transform: scale(1) translateY(0); }
+
+        .modal-content { padding: 30px; overflow-y: auto; box-shadow: var(--neo-in-deep); margin: 12px; border-radius: 6px; }
+        
+        .modal-title { font-size: 1.6rem; color: var(--accent); margin-bottom: 4px; }
+        .modal-subtitle { font-family: var(--font-code); color: var(--text-muted); margin-bottom: 25px; font-size: 0.85rem; }
+        
+        .report-block { margin-bottom: 22px; }
+        .report-block h4 { color: #fff; margin-bottom: 8px; font-size: 1.05rem; border-left: 2px solid var(--accent); padding-left: 8px; }
+        .report-block p, .report-block ul { color: var(--text-muted); font-size: 0.9rem; text-align: justify; line-height: 1.7; }
+
+        .modal-actions { margin-top: 25px; display: flex; gap: 12px; }
+        .btn-neo {
+            padding: 10px 20px; border-radius: 5px; text-decoration: none;
+            color: var(--accent); font-family: var(--font-code); font-size: 0.85rem;
+            box-shadow: var(--neo-out); transition: 0.3s; border: 1px solid transparent; cursor: pointer; background: transparent;
+        }
+        .btn-neo:hover { box-shadow: var(--neo-in); transform: translateY(2px); border-color: rgba(0, 242, 254, 0.2); }
+
+        /* Custom Framed Lightbox */
+        .lightbox-frame {
+            background: var(--surface);
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px var(--accent-glow);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            display: flex; flex-direction: column;
+            max-width: 90vw; max-height: 90vh;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .lightbox-frame {
+            transform: scale(1) translateY(0); opacity: 1;
+        }
+        .lightbox-frame .img-container {
+            padding: 10px; overflow: hidden; display: flex; justify-content: center; align-items: center;
+        }
+        .lightbox-frame img {
+            max-width: 100%;
+            max-height: calc(90vh - 60px);
+            object-fit: contain; border-radius: 6px;
+        }
+
+        /* =========================================
+           Footer & Responsive
+           ========================================= */
+        footer { padding: 2.5rem 5%; text-align: center; margin-top: 2rem; box-shadow: var(--neo-in-deep); }
+        .footer-logo { font-size: 1.2rem; font-family: var(--font-code); color: var(--text-muted); margin-bottom: 0.4rem;}
+        .footer-text { font-size: 0.8rem; color: var(--text-muted); }
+
+        @media (max-width: 900px) { .image-grid { column-count: 2; } }
+        @media (max-width: 768px) {
+            .nav-btn.left { left: 0px; }
+            .nav-btn.right { right: 0px; }
+        }
+        @media (max-width: 600px) {
+            section { padding: 50px 5%; }
+            .image-grid { column-count: 1; }
+            .modal-content { padding: 15px; }
+            .social-dock { padding: 8px 15px; }
+            .avatar-container { width: 120px; height: 120px; }
+            .skills-grid { grid-template-columns: 1fr; }
+            .terminal-card { min-width: 280px; max-width: 280px;}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Ambient Background -->
+    <canvas id="matrix-canvas"></canvas>
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+
+    <!-- 1. Initial Skeleton Loader -->
+    <div id="skeleton-screen">
+        <div class="skel-pulse skel-avatar"></div>
+        <div class="skel-pulse skel-title"></div>
+        <div class="skel-pulse skel-subtitle"></div>
+        <div class="skel-pulse skel-line"></div>
+        <div class="skel-pulse skel-line short"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="reveal-section">
+            <div class="avatar-container stagger-item">
+                <img src="assets/Profile.jpg" alt="Deepan Pramanick" onerror="this.src='https://ui-avatars.com/api/?name=Deepan+Pramanick&background=1b1d24&color=00f2fe&size=200'">
+                <div class="status-dot" title="System Online"></div>
+            </div>
+            
+            <div class="type-name-container stagger-item">
+                <h1 class="dev-name code-font" id="typed-name"></h1>
+            </div>
+            
+            <p class="dev-title stagger-item">Web Developer | AI Engineer</p>
+            <p class="hero-bio stagger-item">
+                A third year BTech IT student from Institute of Engineering and Management currently aspiring to be an Associate Software Engineer. I combine strong technical and problem-solving ability with my leadership skills to plan and execute high end projects.
+            </p>
+            
+            <div class="social-dock stagger-item">
+                <a href="https://github.com/Deepan003" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/deepan-pramanick-3b3b90285/" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/its_dp_unofficial/" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                <a href="mailto:itsdpunofficial2020@gmail.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+            </div>
+        </section>
+
+        <!-- Capabilities Section -->
+        <section id="skills" class="reveal-section">
+            <h2 class="section-heading code-font decode-text" data-target-text="sys.getCapabilities()"></h2>
+            <div class="skills-grid">
+                <div class="skill-box stagger-item">
+                    <h3><i class="fas fa-code"></i> Technical Stack</h3>
+                    <div class="neo-pill-container">
+                        <span class="neo-pill">Full-Stack Web Development</span>
+                        <span class="neo-pill">Artificial Intelligence & ML</span>
+                        <span class="neo-pill">LLMs and RAG</span>
+                        <span class="neo-pill">Software Designing</span>
+                    </div>
+                </div>
+                <div class="skill-box stagger-item">
+                    <h3><i class="fas fa-users"></i> Soft Skills</h3>
+                    <div class="neo-pill-container">
+                        <span class="neo-pill">Excellent Communication</span>
+                        <span class="neo-pill">Organized</span>
+                        <span class="neo-pill">Leadership & Administration</span>
+                        <span class="neo-pill">Problem Solving</span>
+                    </div>
+                </div>
+                <div class="skill-box stagger-item">
+                    <h3><i class="fas fa-camera"></i> Interests</h3>
+                    <div class="neo-pill-container">
+                        <span class="neo-pill">Photography</span>
+                        <span class="neo-pill">Event Management</span>
+                        <span class="neo-pill">Art</span>
+                        <span class="neo-pill">Travel</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="reveal-section">
+            <h2 class="section-heading code-font decode-text" data-target-text="dir ./projects"></h2>
+            
+            <div class="carousel-container stagger-item">
+                <button class="nav-btn left" onclick="scrollCarousel(-1)"><i class="fas fa-chevron-left"></i></button>
+                
+                <div class="project-carousel" id="project-slider">
+                    
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'progene')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - AI_Genomics</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="ProGene AI"></span><span class="cursor"></span></h3>
+                            <p class="desc">Voice-Activated Pan-Cancer Genomic Classifier distinguishing five carcinomas with 98.5% accuracy.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">RNA-Seq</span><span class="tech-tag">Bioinformatics</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'pneumonia')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - CV_Med</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Pneumonia Diagnosis"></span><span class="cursor"></span></h3>
+                            <p class="desc">AI-powered diagnostic pipeline utilizing Convolutional Neural Networks to analyze chest X-rays.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">CNN</span><span class="tech-tag">Deep Learning</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'lifescience')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - FullStack</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Educational App"></span><span class="cursor"></span></h3>
+                            <p class="desc">Full-stack educational web application designed for helping students, built with React and Node.js.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Node.js</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'estatix')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - RealEstate</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Online Marketplace"></span><span class="cursor"></span></h3>
+                            <p class="desc">Full-stack real estate web application built with Next.js, TypeScript, and Tailwind CSS.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Next.js</span><span class="tech-tag">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'ecofloors')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Sustainability</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Eco Tracking Platform"></span><span class="cursor"></span></h3>
+                            <p class="desc">Core idea and frontend of a tracking platform to monitor household resource consumption.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Frontend</span><span class="tech-tag">Eco-Tech</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'auctora')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Mobile</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Auction Application"></span><span class="cursor"></span></h3>
+                            <p class="desc">Backend development for a Flutter based online auction android application.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Flutter</span><span class="tech-tag">Backend</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'sentiment')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - NLP_AI</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Movie Sentiment"></span><span class="cursor"></span></h3>
+                            <p class="desc">Neural Network based website developed with the aid of AI for faster development.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Neural Networks</span><span class="tech-tag">AI</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'sales')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Data_Viz</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Sales Analytics"></span><span class="cursor"></span></h3>
+                            <p class="desc">Frontend of a Website that solves the problem of manually handling data irregularities.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Frontend</span><span class="tech-tag">Analytics</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                    <div class="terminal-card" onclick="handleProjectClick(this, 'portfolio')">
+                        <div class="terminal-header">
+                            <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - WebDev</span>
+                        </div>
+                        <div class="terminal-body">
+                            <h3><span class="typewriter-text" data-type-text="Portfolio Website"></span><span class="cursor"></span></h3>
+                            <p class="desc">Planned and created an individualized personal site specific to create an online presence.</p>
+                            <div class="tech-row">
+                                <span class="tech-tag">Frontend</span><span class="tech-tag">UI/UX</span>
+                            </div>
+                        </div>
+                        <div class="view-btn">./execute_report</div>
+                    </div>
+
+                </div>
+                
+                <button class="nav-btn right" onclick="scrollCarousel(1)"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <!-- Photography Section -->
+        <section id="photography" class="reveal-section">
+            <h2 class="section-heading code-font decode-text" data-target-text="render(Visual_Arts)"></h2>
+            <div class="image-grid stagger-item">
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-1.jpg" onerror="this.src='https://images.unsplash.com/photo-1516802273409-68526ee1bdd6?w=600&q=80'" alt="Photography"></div>
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-2.jpg" onerror="this.src='https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=80'" alt="Photography"></div>
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-3.jpg" onerror="this.src='https://images.unsplash.com/photo-1506744626753-1fa28f6f5362?w=600&q=80'" alt="Photography"></div>
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-4.jpg" onerror="this.src='https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&q=80'" alt="Photography"></div>
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-5.jpg" onerror="this.src='https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80'" alt="Photography"></div>
+                <div class="img-wrapper" onclick="openImage(this)"><img src="assets/photo-6.jpg" onerror="this.src='https://images.unsplash.com/photo-1470071131384-001b85755536?w=600&q=80'" alt="Photography"></div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="reveal-section">
+            <h2 class="section-heading code-font decode-text" data-target-text="fetch(/achievements)"></h2>
+            <div class="achievements-grid">
+                
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/1.jpg')">
+                    <div class="rank-badge gold">1st</div>
+                    <div class="achieve-info">
+                        <h3>Aperture 2026</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/2.jpg')">
+                    <div class="rank-badge gold">1st</div>
+                    <div class="achieve-info">
+                        <h3>Vision Alchemy Exhibition 2026</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/3.jpg')">
+                    <div class="rank-badge silver">2nd</div>
+                    <div class="achieve-info">
+                        <h3>Vision Alchemy Competition 2026</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/4.jpg')">
+                    <div class="rank-badge silver">2nd</div>
+                    <div class="achieve-info">
+                        <h3>Photogram 2025</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/5.jpg')">
+                    <div class="rank-badge bronze">3rd</div>
+                    <div class="achieve-info">
+                        <h3>IP IEMMUN 2025</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/6.jpg')">
+                    <div class="rank-badge bronze">3rd</div>
+                    <div class="achieve-info">
+                        <h3>Photoverse 2026</h3>
+                    </div>
+                </div>
+
+                <div class="achieve-card stagger-item" onclick="openAchievement('assets/7.jpg')">
+                    <div class="rank-badge bronze">3rd</div>
+                    <div class="achieve-info">
+                        <h3>IEM HEALS Paper Presentation 2024</h3>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="reveal-section">
+            <h2 class="footer-logo">EOF // Deepan Pramanick</h2>
+            <p class="footer-text">&copy; 2026. Engineered with precision.</p>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    
+    <!-- Project Report Modal -->
+    <div id="project-modal" class="modal-overlay" onclick="closeModalOutside(event, 'project-modal')">
+        <div class="modal-window">
+            <div class="terminal-header">
+                <div class="mac-dot red" onclick="closeModal('project-modal')" style="cursor:pointer;" title="Close"></div>
+                <div class="mac-dot yellow"></div>
+                <div class="mac-dot green"></div>
+                <span class="code-font" style="color:#777; font-size:0.7rem; margin-left:10px;">Execution_Report.md</span>
+            </div>
+            <div class="modal-content" id="report-content">
+                <!-- JS Injected Content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox / Achievement Modal -->
+    <div id="image-modal" class="modal-overlay" onclick="closeModalOutside(event, 'image-modal')">
+        <div class="lightbox-frame">
+            <div class="terminal-header" style="width: 100%; border-radius: 10px 10px 0 0; background: #121418;">
+                <div class="mac-dot red" onclick="closeModal('image-modal')" style="cursor:pointer;"></div>
+                <div class="mac-dot yellow"></div>
+                <div class="mac-dot green"></div>
+                <span class="code-font" style="color:#777; font-size:0.7rem; margin-left:10px;">Image_Viewer.exe</span>
+            </div>
+            <div class="img-container">
+                <img id="lightbox-img" src="" alt="View">
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <script>
+        // 1. Prominent Matrix Background
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
+        const fontSize = 18; 
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1; 
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(22, 24, 29, 0.15)'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'rgba(0, 242, 254, 0.35)'; 
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 35);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // 2. Comprehensive Project Database
+        const db = {
+            progene: {
+                title: "ProGene AI",
+                sub: "Voice-Activated Pan-Cancer Genomic Classifier",
+                intro: "Developed ProGene AI, a state-of-the-art voice-activated bioinformatics pipeline engineered to distinguish five distinct carcinomas with an exceptional 98.5% accuracy based exclusively on RNA-Seq data. It bridges the gap between complex genomic sequences and accessible diagnostic outputs.",
+                arch: "At its core, a highly optimized Multi-Layer Feedforward Deep Neural Network (DNN) aggressively reduces 20,531 raw genetic features down to the 100 most critical predictive biomarkers using rigorous ANOVA feature selection. The model leverages ReLU activations, Dropout layers for regularization, Adam optimization, and Softmax outputs to successfully model complex, non-linear epistatic interactions within genomic datasets. It also incorporates a self-healing zero-imputation algorithm to elegantly handle data sparsity.",
+                tech: ["Python", "TensorFlow/Keras", "RNA-Seq", "ANOVA Feature Selection", "Deep Neural Networks"],
+                repo: "https://github.com/Deepan003/progene-ai"
+            },
+            pneumonia: {
+                title: "Pneumonia Diagnosis Pipeline",
+                sub: "Deep Learning for Medical Imaging",
+                intro: "Engineered an advanced AI-powered medical diagnostic pipeline utilizing a custom Convolutional Neural Network (CNN) architecture. The system is designed specifically to analyze and diagnose complex chest X-ray imagery, acting as a high-speed secondary validation tool for medical professionals.",
+                arch: "The robust algorithm employs meticulously optimized convolutional strides and max-pooling layers to systematically extract, compute, and map deep visual features indicative of pulmonary infections. The model pipeline includes heavy dataset augmentation to prevent over-fitting, ensuring high generalization across diverse X-ray qualities and minimizing false negatives in clinical triage environments.",
+                tech: ["Python", "OpenCV", "Convolutional Neural Networks", "Data Augmentation", "Medical Imaging AI"],
+                repo: "https://github.com/Deepan003/ai-pneumonia-diagnosis"
+            },
+            lifescience: {
+                title: "Educational Application",
+                sub: "Life Science Aid / Web",
+                intro: "Developed a comprehensive full-stack educational web application deliberately designed as a digital learning aid for students. The platform centralizes study materials, provides interactive mock testing, and tracks academic progress seamlessly.",
+                arch: "The frontend interface is constructed utilizing React and strongly-typed TypeScript to guarantee type safety and prevent runtime errors. The backend operates on a scalable Node.js environment, managing secure RESTful API integrations, user role management (students vs. administrators), and dynamic delivery of real-time test evaluations and learning resources.",
+                tech: ["React", "TypeScript", "Node.js", "Express", "Full-Stack Architecture"],
+                repo: "https://github.com/Deepan003/LifescienceWeb"
+            },
+            estatix: {
+                title: "Online Real Estate Marketplace",
+                sub: "Estatix Platform",
+                intro: "Architected and deployed 'Estatix', a robust full-stack real estate web application marketplace. It provides a dynamic environment for users to seamlessly list, browse, filter, and interact with property listings globally.",
+                arch: "Engineered using cutting-edge web frameworks. The core is built on Next.js leveraging Server-Side Rendering (SSR) for optimal SEO and rapid page loads. It is strongly typed via TypeScript and styled utilizing Tailwind CSS for a highly responsive, atomic design system. The backend efficiently queries MongoDB to manage complex property relational data, user profiles, and advanced search filtering algorithms.",
+                tech: ["Next.js", "TypeScript", "Tailwind CSS", "MongoDB", "SSR"],
+                repo: "https://github.com/Deepan003/Estatix"
+            },
+            ecofloors: {
+                title: "Sustainability Tracking Platform",
+                sub: "EcoFloors",
+                intro: "Pioneered the core conceptualization and frontend development of 'EcoFloors', an intuitive tracking platform built to monitor, analyze, and optimize household resource consumption in real-time.",
+                arch: "The platform's frontend is intricately designed to provide users with transparent data visualization of their eco-metrics. It implements responsive, interactive charting algorithms that translate raw consumption data into actionable insights, ultimately guiding users toward making tangible, sustainable living choices and reducing their carbon footprint.",
+                tech: ["Frontend Development", "UI/UX Design", "Data Visualization", "Eco-Tech"],
+                repo: "https://github.com/Deepan003/EcoFloors"
+            },
+            auctora: {
+                title: "Flutter Based Auction App",
+                sub: "Mobile Auction Platform",
+                intro: "Served as the primary backend and logic developer for 'Auctora', a native Android online auction application built entirely with the Flutter framework. The app requires extreme precision and speed for live bidding.",
+                arch: "Spearheaded the integration of a high-concurrency backend architecture utilizing Firebase Realtime Database. Implemented robust state-management logic within Dart to ensure that live bids are registered, authenticated, and reflected instantaneously across all connected global clients, maintaining strict sub-200ms latency drops during high-traffic auction windows.",
+                tech: ["Flutter", "Dart", "Firebase Realtime DB", "State Management", "NoSQL"],
+                repo: "https://github.com/Deepan003/auctora"
+            },
+            sentiment: {
+                title: "Movie Sentiment Analysis",
+                sub: "Neural Network based NLP Website",
+                intro: "As a capstone to an advanced curriculum, I developed and deployed a Neural Network-based web application focused on processing and classifying natural language. The development was accelerated using AI assistance for rapid prototyping.",
+                arch: "The core engine handles complex text preprocessing, translating raw, unstructured movie reviews into dense vector embeddings. A custom neural network architecture processes these embeddings through multi-layered deep learning nodes to extract sentiment features, ultimately quantifying textual data into precise emotional polarities (positive/negative).",
+                tech: ["Python", "Neural Networks", "Natural Language Processing", "Word Embeddings", "AI Tooling"],
+                repo: "https://github.com/Deepan003/Movie-Sentiment-Analysis-NNDL"
+            },
+            sales: {
+                title: "Sales Analytics Dashboard",
+                sub: "Enterprise Data Visualization",
+                intro: "Engineered the comprehensive frontend of a Business Sales Dashboard. The primary objective was to solve the critical enterprise problem of manually handling and interpreting data irregularities across vast sales pipelines.",
+                arch: "The dashboard consumes raw structural data and passes it through automated frontend sorting algorithms. It renders dynamic, highly responsive charts utilizing modern JavaScript visualization libraries. By tracking real-time metrics, it empowers stakeholders to bypass manual spreadsheets and instantly identify market trends, anomalies, and performance drops.",
+                tech: ["JavaScript", "HTML5/CSS3", "Frontend Analytics", "Data Visualization", "REST APIs"],
+                repo: "https://github.com/Deepan003/salesxboard-website"
+            },
+            portfolio: {
+                title: "Portfolio Website",
+                sub: "Personalized Client Web Presence",
+                intro: "Planned, designed, and executed a highly individualized, bespoke personal website specifically tailored to establish a commanding online presence for a professional client.",
+                arch: "Moved away from bloated CMS templates to build entirely from the ground up using core front-end technologies (HTML, CSS, and Vanilla JavaScript). Prioritized absolute responsiveness, DOM load speeds, fluid custom animations, and accessibility, achieving near-perfect Lighthouse performance scores.",
+                tech: ["HTML/CSS", "Vanilla JavaScript", "Mobile-First Design", "Performance Optimization"],
+                repo: "https://github.com/Deepan003/Reshab-Chowbey-Website-"
+            }
+        };
+
+        // 3. Preloader & Name Typing Logic
+        window.addEventListener('load', () => {
+            const skel = document.getElementById('skeleton-screen');
+            const main = document.getElementById('main-content');
+            
+            setTimeout(() => {
+                skel.classList.add('slide-up'); 
+                
+                setTimeout(() => {
+                    main.classList.add('loaded');
+                    initObserver();
+                    
+                    const nameEl = document.getElementById('typed-name');
+                    const fullName = "<Deepan_Pramanick />";
+                    let i = 0;
+                    nameEl.classList.add('typing-active');
+                    
+                    function typeName() {
+                        if (i < fullName.length) {
+                            nameEl.innerHTML += fullName.charAt(i);
+                            i++;
+                            setTimeout(typeName, 60);
+                        } else {
+                            nameEl.classList.remove('typing-active');
+                            nameEl.classList.add('typing-done');
+                        }
+                    }
+                    setTimeout(typeName, 400); 
+
+                }, 500); 
+            }, 1200); 
+        });
+
+        // Software "Decode/Scramble" Text Effect
+        function decodeText(element) {
+            const text = element.getAttribute('data-target-text');
+            const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
+            let iterations = 0;
+            
+            const interval = setInterval(() => {
+                element.innerText = text.split('').map((char, index) => {
+                    if(index < iterations / 2) {
+                        return text[index];
+                    }
+                    return chars[Math.floor(Math.random() * chars.length)];
+                }).join('');
+                
+                if(iterations >= text.length * 2) {
+                    clearInterval(interval);
+                    element.innerText = text;
+                }
+                iterations += 1;
+            }, 30);
+        }
+
+        // 4. Intersection Observer (Reveal, Stagger, Terminal & Decode Typing)
+        function initObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('reveal-section')) {
+                            entry.target.classList.add('visible');
+                            
+                            const staggers = entry.target.querySelectorAll('.stagger-item');
+                            staggers.forEach((el, index) => {
+                                setTimeout(() => {
+                                    el.classList.add('visible');
+                                }, index * 150);
+                            });
+
+                            // Trigger Section Header Decode
+                            const headings = entry.target.querySelectorAll('.decode-text:not(.decoded)');
+                            headings.forEach(heading => {
+                                heading.classList.add('decoded');
+                                decodeText(heading);
+                            });
+
+                            // Trigger project terminal typing
+                            const cards = entry.target.querySelectorAll('.terminal-card:not(.typed)');
+                            if(cards.length > 0) {
+                                cards.forEach((card, idx) => {
+                                    setTimeout(() => {
+                                        const textElem = card.querySelector('.typewriter-text');
+                                        if(textElem) {
+                                            const text = textElem.getAttribute('data-type-text');
+                                            typeText(textElem, text, () => {
+                                                card.classList.add('typed');
+                                            });
+                                        }
+                                    }, idx * 300); 
+                                });
+                            }
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
+        }
+
+        // Typewriter Logic
+        function typeText(element, text, callback) {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 30);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        // 5. Fixed Carousel Drag & Auto-Scroll Logic
+        const slider = document.getElementById('project-slider');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let autoScrollInterval;
+        let scrollDirection = 1;
+
+        function startAutoScroll() {
+            clearInterval(autoScrollInterval); 
+            autoScrollInterval = setInterval(() => {
+                if(!isDown) {
+                    slider.scrollLeft += scrollDirection * 1.5; 
+                    if(slider.scrollLeft >= (slider.scrollWidth - slider.clientWidth - 1)) {
+                        scrollDirection = -1; 
+                    } else if (slider.scrollLeft <= 0) {
+                        scrollDirection = 1;
+                    }
+                }
+            }, 25);
+        }
+
+        function stopAutoScroll() {
+            clearInterval(autoScrollInterval);
+        }
+
+        slider.addEventListener('mouseenter', stopAutoScroll);
+        slider.addEventListener('mouseleave', startAutoScroll);
+        slider.addEventListener('touchstart', stopAutoScroll);
+        slider.addEventListener('touchend', startAutoScroll);
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.classList.add('active');
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.classList.remove('active');
+        });
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; 
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        startAutoScroll(); // Init loop
+
+        function scrollCarousel(dir) {
+            stopAutoScroll();
+            slider.scrollBy({ left: dir * 350, behavior: 'smooth' });
+            setTimeout(startAutoScroll, 3000); 
+        }
+
+        // 6. Interactive Click & Modals
+        function handleProjectClick(cardElement, projectId) {
+            if(isDown) return; 
+
+            cardElement.classList.add('clicked');
+            setTimeout(() => {
+                cardElement.classList.remove('clicked');
+                openReport(projectId);
+            }, 300);
+        }
+
+        function openReport(id) {
+            const d = db[id];
+            const content = document.getElementById('report-content');
+            
+            const techHTML = d.tech.map(t => `<span class="tech-tag">${t}</span>`).join('');
+
+            content.innerHTML = `
+                <h2 class="modal-title code-font">> ${d.title}_</h2>
+                <p class="modal-subtitle">CompileTarget: ${d.sub}</p>
+                
+                <div class="report-block">
+                    <h4><i class="fas fa-file-alt"></i> Abstract</h4>
+                    <p>${d.intro}</p>
+                </div>
+                
+                <div class="report-block">
+                    <h4><i class="fas fa-network-wired"></i> System Overview</h4>
+                    <p>${d.arch}</p>
+                </div>
+                
+                <div class="report-block">
+                    <h4><i class="fas fa-layer-group"></i> Environment Stack</h4>
+                    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">${techHTML}</div>
+                </div>
+
+                <div class="modal-actions">
+                    <a href="${d.repo}" target="_blank" class="btn-neo"><i class="fab fa-github"></i> Run git_clone</a>
+                </div>
+            `;
+
+            document.getElementById('project-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Shared Image Opener for Gallery
+        function openImage(element) {
+            const imgSrc = element.querySelector('img') ? element.querySelector('img').src : element; 
+            document.getElementById('lightbox-img').src = typeof element === 'string' ? element : imgSrc;
+            document.getElementById('image-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Achievement Photo Opener
+        function openAchievement(imgSrc) {
+            const fallback = `https://via.placeholder.com/600x400/1b1d24/00f2fe?text=Achievement+Image`;
+            document.getElementById('lightbox-img').src = imgSrc;
+            document.getElementById('lightbox-img').onerror = function() { this.src = fallback; };
+            document.getElementById('image-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function closeModalOutside(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+    </script>
+</body>
+</html>
