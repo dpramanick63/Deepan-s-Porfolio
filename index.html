@@ -165,7 +165,6 @@
             box-shadow: var(--neo-out);
             border: 1px solid rgba(255,255,255,0.02);
             opacity: 0; 
-            /* Levitate class gets applied by GSAP after entrance */
         }
 
         .card {
@@ -509,26 +508,71 @@
         .footer-logo { font-size: 1.2rem; font-family: var(--font-code); color: var(--text-muted); margin-bottom: 0.4rem;}
         .footer-text { font-size: 0.8rem; color: var(--text-muted); }
 
-        /* Tightly Optimized Mobile Breakpoints */
+        /* =========================================
+           Tightly Optimized Mobile Breakpoints
+           ========================================= */
         @media (max-width: 900px) { .image-grid { column-count: 2; } }
+        
         @media (max-width: 800px) {
             #hero { flex-direction: column; text-align: center; padding-top: 100px; gap: 2.5rem;}
             .hero-text { align-items: center; text-align: center; }
             .card { margin: 0 auto; }
         }
+        
         @media (max-width: 768px) {
             .nav-btn.left { left: 0px; }
             .nav-btn.right { right: 0px; }
         }
+        
         @media (max-width: 600px) {
             section { padding: 50px 5%; }
-            .type-name-container { white-space: normal; overflow: visible; border-right: none; }
-            .type-name-container h1.dev-name { white-space: normal; animation: none; font-size: 1.7rem; border: none; }
-            .image-grid { column-count: 1; }
-            .modal-content { padding: 15px; }
+            
+            /* Typography and Spacing Tweaks */
+            .section-heading { font-size: 1.4rem; margin-bottom: 2.5rem; }
+            .dev-title { font-size: 0.85rem; margin-bottom: 1rem; }
+            .hero-bio { font-size: 0.85rem; padding: 0 10px; margin-bottom: 1.5rem; line-height: 1.5;}
+            
+            /* Fixing the Name Overflow & Typing alignment */
+            .type-name-container { white-space: nowrap; border-right: none; margin-bottom: 0.8rem; display: flex; justify-content: center; width: 100%;}
+            .type-name-container h1.dev-name { 
+                white-space: nowrap; 
+                font-size: clamp(1.2rem, 5.5vw, 1.8rem) !important; 
+                border-right: 0.15em solid var(--accent); /* Keep caret alive */
+                animation: blink-caret 0.75s step-end infinite;
+            }
+
             .social-dock { padding: 8px 15px; gap: 0.8rem; }
-            .skills-grid { grid-template-columns: 1fr; }
-            .terminal-card { min-width: 280px; max-width: 280px;}
+            .social-btn { width: 34px; height: 34px; font-size: 1.1rem; }
+            
+            /* Profile Card sizing for mobile */
+            .card { width: min(260px, calc(100vw - 3rem)); }
+            
+            /* Grid and Padding adjustments */
+            .skills-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .skill-box { padding: 1.3rem; }
+            .skill-box h3 { font-size: 0.95rem; margin-bottom: 1rem;}
+            .neo-pill { font-size: 0.75rem; padding: 4px 10px; }
+            
+            /* Projects */
+            .terminal-card { min-width: 260px; max-width: 260px; }
+            .terminal-body { padding: 14px; }
+            .terminal-card h3 { font-size: 1rem; margin-bottom: 4px;}
+            .terminal-card p.desc { font-size: 0.8rem; }
+            
+            /* Visual Arts */
+            .image-grid { column-count: 2; column-gap: 0.8rem; }
+            .img-wrapper { margin-bottom: 0.8rem; padding: 4px; border-radius: 8px;}
+            
+            /* Achievements */
+            .achievements-grid { gap: 1rem; }
+            .achieve-card { padding: 12px 15px; gap: 15px; }
+            .rank-badge { width: 45px; height: 45px; font-size: 1rem; }
+            .achieve-info h3 { font-size: 0.85rem; }
+            
+            /* Modals */
+            .modal-content { padding: 15px; }
+            .report-block h4 { font-size: 0.95rem; }
+            .report-block p, .report-block ul { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -1009,27 +1053,23 @@
                         });
                     }, 1500);
                     
+                    // Unified Universal Typing Animation 
                     const nameEl = document.getElementById('typed-name');
                     const fullName = "<Deepan_Pramanick />";
                     let i = 0;
                     
-                    // Only run typing animation on non-tiny screens to prevent text wrap snapping
-                    if(window.innerWidth > 600) {
-                        nameEl.classList.add('typing-active');
-                        function typeName() {
-                            if (i < fullName.length) {
-                                nameEl.innerHTML += fullName.charAt(i);
-                                i++;
-                                setTimeout(typeName, 60);
-                            } else {
-                                nameEl.classList.remove('typing-active');
-                                nameEl.classList.add('typing-done');
-                            }
+                    nameEl.classList.add('typing-active');
+                    function typeName() {
+                        if (i < fullName.length) {
+                            nameEl.innerHTML += fullName.charAt(i);
+                            i++;
+                            setTimeout(typeName, 60);
+                        } else {
+                            nameEl.classList.remove('typing-active');
+                            nameEl.classList.add('typing-done');
                         }
-                        setTimeout(typeName, 400); 
-                    } else {
-                        nameEl.innerHTML = fullName;
                     }
+                    setTimeout(typeName, 400); 
 
                 }, 500); 
             }, 1200); 
