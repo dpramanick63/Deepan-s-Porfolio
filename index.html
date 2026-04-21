@@ -232,7 +232,7 @@
         }
         h1.dev-name { 
             font-size: clamp(1.6rem, 4.5vw, 3.5rem); 
-            color: var(--accent);
+            color: #ffffff; /* Optimized Heading Color */
             overflow: hidden; 
             white-space: nowrap; 
             border-right: 0.15em solid var(--accent);
@@ -292,7 +292,7 @@
             padding: 1.8rem; border-radius: 12px; box-shadow: var(--neo-out);
             background: var(--surface); border: 1px solid rgba(255,255,255,0.01);
         }
-        .skill-box h3 { margin-bottom: 1.2rem; color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
+        .skill-box h3 { margin-bottom: 1.2rem; color: #ffffff; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;} /* Optimized Heading Color */
         .neo-pill-container { display: flex; flex-wrap: wrap; gap: 8px; }
         .neo-pill {
             padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;
@@ -358,7 +358,7 @@
         
         .terminal-body { padding: 18px; box-shadow: var(--neo-in); margin: 10px; border-radius: 6px; flex-grow: 1; pointer-events: none;}
 
-        .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--accent); min-height: 24px;}
+        .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px; color: #ffffff; min-height: 24px;} /* Optimized Heading Color */
         .terminal-card p.desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; opacity: 0; transition: opacity 0.5s ease 1s; }
         .terminal-card.typed p.desc { opacity: 1; }
 
@@ -463,7 +463,7 @@
 
         .modal-content { padding: 30px; overflow-y: auto; box-shadow: var(--neo-in-deep); margin: 12px; border-radius: 6px; }
         
-        .modal-title { font-size: 1.6rem; color: var(--accent); margin-bottom: 4px; }
+        .modal-title { font-size: 1.6rem; color: #ffffff; margin-bottom: 4px; } /* Optimized Heading Color */
         .modal-subtitle { font-family: var(--font-code); color: var(--text-muted); margin-bottom: 25px; font-size: 0.85rem; }
         
         .report-block { margin-bottom: 22px; }
@@ -527,6 +527,11 @@
         @media (max-width: 600px) {
             section { padding: 50px 5%; }
             
+            /* Optimization: Hide navigation buttons on mobile, rely on touch swipe to prevent UI blocking */
+            .nav-btn { display: none; }
+            /* Optimization: Ensure carousel doesn't have clipping padding issues on touch */
+            .project-carousel { padding-left: 0; padding-right: 0; }
+
             /* Typography and Spacing Tweaks */
             .section-heading { font-size: 1.4rem; margin-bottom: 2.5rem; }
             .dev-title { font-size: 0.85rem; margin-bottom: 1rem; }
@@ -573,6 +578,16 @@
             .modal-content { padding: 15px; }
             .report-block h4 { font-size: 0.95rem; }
             .report-block p, .report-block ul { font-size: 0.85rem; }
+        }
+
+        /* Optimization: Ultra-small mobile device fitting (without touching PC layout) */
+        @media (max-width: 420px) {
+            .terminal-card { min-width: 240px; max-width: 240px; }
+            .card { width: min(240px, calc(100vw - 2rem)); }
+            .type-name-container h1.dev-name { font-size: clamp(1.1rem, 5vw, 1.4rem) !important; }
+            .achieve-card { flex-direction: column; text-align: center; padding: 15px; }
+            .rank-badge { margin: 0 auto; }
+            .social-btn { width: 30px; height: 30px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -1301,7 +1316,7 @@
            ========================================= */
         (() => {
             'use strict';
-            const FONT_PX      = 2;       
+            const FONT_PX      = 2;        
             const CYCLE_MS     = 10000;   
             const TRANSFORM_MS = 3200;    
             const REVERSE_MS   = 2800;    
@@ -1320,7 +1335,7 @@
             cv.height = RH;
             const ctx = cv.getContext('2d', { alpha: false, willReadFrequently: false });
 
-            const FONT_R = FONT_PX * DPR;       
+            const FONT_R = FONT_PX * DPR;        
             const COLS   = Math.floor(RW / FONT_R);
             const ROWS   = Math.floor(RH / FONT_R);
             const TOTAL  = COLS * ROWS;
@@ -1329,7 +1344,7 @@
 
             let phase    = 'real';  
             let waveT    = 0;
-            let glitchT  = 0;       
+            let glitchT  = 0;        
             let waveDist = null;
             let transforming = false;
             let cycleTO  = null;
