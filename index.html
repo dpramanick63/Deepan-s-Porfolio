@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Deepan Pramanick | AI Engineer & Web Developer</title>
     
-    <!-- Professional Monospace & Sans-Serif Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
@@ -18,19 +16,19 @@
            Dark Neomorphic & Terminal Theme Variables
            ========================================= */
         :root {
-            --bg-color: #16181d;
-            --surface: #1b1d24;
-            --surface-light: #22262f;
+            --bg-color: #06080d; 
+            --surface: #12151c;
+            --surface-light: #1b1e26;
             --text-main: #d1d5db;
             --text-muted: #6b7280;
             --accent: #00f2fe;
             --accent-glow: rgba(0, 242, 254, 0.25);
             
             /* Sleek Neomorphic Shadows */
-            --neo-out: 7px 7px 14px #101216, -7px -7px 14px #1c1e24;
-            --neo-out-hover: 10px 10px 20px #0e0f12, -10px -10px 20px #1e2128;
-            --neo-in: inset 5px 5px 10px #101216, inset -5px -5px 10px #1c1e24;
-            --neo-in-deep: inset 8px 8px 16px #0e0f12, inset -8px -8px 16px #1e2128;
+            --neo-out: 7px 7px 14px #040508, -7px -7px 14px #080b12;
+            --neo-out-hover: 10px 10px 20px #030407, -10px -10px 20px #090c13;
+            --neo-in: inset 5px 5px 10px #040508, inset -5px -5px 10px #080b12;
+            --neo-in-deep: inset 8px 8px 16px #030407, inset -8px -8px 16px #090c13;
 
             --font-code: 'Fira Code', monospace;
             --font-ui: 'Inter', sans-serif;
@@ -62,16 +60,16 @@
            ========================================= */
         #matrix-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            z-index: -2; opacity: 0.35; pointer-events: none;
+            z-index: -2; opacity: 0.6; pointer-events: none;
         }
         
         .ambient-orb {
-            position: fixed; border-radius: 50%; filter: blur(100px);
-            z-index: -1; opacity: 0.12; pointer-events: none;
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            z-index: -1; opacity: 0.15; pointer-events: none;
             animation: floatOrb 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
         .orb-1 { width: 45vw; height: 45vw; background: var(--accent); top: -10%; left: -10%; }
-        .orb-2 { width: 35vw; height: 35vw; background: #4facfe; bottom: -10%; right: -10%; animation-delay: -7s; }
+        .orb-2 { width: 35vw; height: 35vw; background: #3b82f6; bottom: -10%; right: -10%; animation-delay: -7s; }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
@@ -94,13 +92,13 @@
         }
         
         .skel-pulse {
-            background: linear-gradient(90deg, #16181d 0%, #1f2229 50%, #16181d 100%);
+            background: linear-gradient(90deg, #0a0c12 0%, #151822 50%, #0a0c12 100%);
             background-size: 200% 100%;
             animation: pulse 1.5s infinite linear;
             border-radius: 6px; box-shadow: var(--neo-in);
         }
 
-        .skel-avatar { width: 130px; height: 130px; border-radius: 50%; margin-bottom: 2rem; }
+        .skel-card { width: min(340px, calc(100vw - 2rem)); aspect-ratio: 3 / 4; border-radius: 4px; margin-bottom: 2rem; }
         .skel-title { width: 220px; height: 25px; margin-bottom: 1rem; }
         .skel-subtitle { width: 160px; height: 12px; margin-bottom: 2rem; }
         .skel-line { width: 80%; max-width: 450px; height: 10px; margin-bottom: 0.8rem; }
@@ -127,41 +125,119 @@
         .stagger-item.visible { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           Hero Section
+           Hero Section (Left-Aligned Layout)
            ========================================= */
         #hero {
-            min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center;
-            padding: 2rem; position: relative;
-        }
-
-        .avatar-container {
-            width: 150px; height: 150px; border-radius: 50%;
-            box-shadow: var(--neo-out); padding: 5px; margin-bottom: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 4rem;
+            padding: 2rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
         }
-        .avatar-container img {
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-            box-shadow: var(--neo-in); filter: contrast(1.05) grayscale(15%);
+
+        .hero-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            max-width: 600px;
         }
-        .status-dot {
-            position: absolute; bottom: 10px; right: 10px;
-            width: 14px; height: 14px; border-radius: 50%;
-            background: #00ff88; box-shadow: 0 0 10px #00ff88;
-            border: 2px solid var(--bg-color);
+
+        /* -----------------------------------------
+           Interactive Card & Dock
+           ----------------------------------------- */
+        @keyframes levitate {
+            0% { transform: translateY(0px); box-shadow: var(--neo-out); }
+            50% { transform: translateY(-12px); box-shadow: 0 20px 30px rgba(0,0,0,0.4), 0 0 25px rgba(0, 242, 254, 0.12); }
+            100% { transform: translateY(0px); box-shadow: var(--neo-out); }
         }
+
+        .profile-showcase {
+            position: relative;
+            padding: 12px;
+            border-radius: 12px;
+            background: var(--surface);
+            box-shadow: var(--neo-out);
+            border: 1px solid rgba(255,255,255,0.02);
+            opacity: 0; 
+            /* Levitate class gets applied by GSAP after entrance */
+        }
+
+        .card {
+            position: relative;
+            width: min(340px, calc(100vw - 3rem));
+            aspect-ratio: 3 / 4;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: crosshair;
+            box-shadow: 0 0 0 1px rgba(0, 242, 254, 0.1), 0 0 50px 5px rgba(0, 242, 254, 0.05);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .card canvas {
+            position: absolute; inset: 0;
+            display: block; width: 100%; height: 100%;
+            image-rendering: pixelated;
+        }
+
+        .scan {
+            position: absolute; inset: 0; pointer-events: none; z-index: 5;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(0,0,0,0) 0px, rgba(0,0,0,0) 3px,
+                rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 4px
+            );
+        }
+
+        .br-corner {
+            position: absolute; width: 16px; height: 16px;
+            border-color: rgba(0, 242, 254, 0.6); border-style: solid; border-width: 0;
+            z-index: 6; pointer-events: none;
+        }
+        .tl  { top:8px;    left:8px;   border-top-width:1.5px;    border-left-width:1.5px;  }
+        .tr  { top:8px;    right:8px;  border-top-width:1.5px;    border-right-width:1.5px; }
+        .bl  { bottom:8px; left:8px;   border-bottom-width:1.5px; border-left-width:1.5px;  }
+        .br2 { bottom:8px; right:8px;  border-bottom-width:1.5px; border-right-width:1.5px; }
+
+        .hint {
+            position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+            font: 10px/1 var(--font-code); color: rgba(0, 242, 254, 0.6);
+            letter-spacing: 0.14em; pointer-events: none; z-index: 7;
+            white-space: nowrap;
+            opacity: 1; transition: opacity 1s ease;
+        }
+        .hint.gone { opacity: 0; }
         
+        .status-dot {
+            position: absolute; bottom: -5px; right: -5px;
+            width: 18px; height: 18px; border-radius: 50%;
+            background: #00ff88; box-shadow: 0 0 12px #00ff88;
+            border: 3px solid var(--surface);
+            z-index: 20;
+        }
+
+        /* ----------------------------------------- */
+
         .type-name-container {
             display: inline-block;
             margin-bottom: 0.5rem;
+            max-width: 100%;
         }
         h1.dev-name { 
-            font-size: clamp(1.8rem, 4vw, 3rem); 
+            font-size: clamp(1.6rem, 4.5vw, 3.5rem); 
             color: var(--accent);
             overflow: hidden; 
             white-space: nowrap; 
             border-right: 0.15em solid var(--accent);
-            margin: 0 auto;
+            margin: 0;
             text-shadow: 0 0 10px var(--accent-glow);
         }
         .typing-active {
@@ -175,12 +251,13 @@
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent); } }
 
-        .dev-title { font-size: 1rem; color: var(--text-muted); margin-bottom: 2rem; letter-spacing: 2px; text-transform: uppercase; }
-        .hero-bio { max-width: 580px; font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        .dev-title { font-size: clamp(0.85rem, 2vw, 1rem); color: var(--text-muted); margin-bottom: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-bio { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 100%; }
         
         .social-dock {
             display: flex; gap: 1rem; padding: 10px 20px;
             border-radius: 30px; box-shadow: var(--neo-out); background: var(--surface);
+            flex-wrap: wrap; justify-content: center;
         }
         .social-btn {
             color: var(--text-muted); font-size: 1.2rem; transition: 0.3s;
@@ -240,8 +317,8 @@
             z-index: 10;
             background: var(--surface-light);
             border: 1px solid rgba(255,255,255,0.05);
-            color: var(--accent);
-            width: 45px; height: 45px;
+            color: var(--text-muted);
+            width: 50px; height: 50px;
             border-radius: 50%;
             cursor: pointer;
             box-shadow: var(--neo-out);
@@ -249,13 +326,12 @@
             display: flex; justify-content: center; align-items: center;
             font-size: 1.2rem;
         }
-        .nav-btn:hover { box-shadow: var(--neo-in); transform: scale(0.95); color: #fff;}
-        .nav-btn.left { left: -22px; }
-        .nav-btn.right { right: -22px; }
+        .nav-btn:hover { box-shadow: var(--neo-in); transform: scale(0.95); color: var(--accent);}
+        .nav-btn.left { left: -25px; }
+        .nav-btn.right { right: -25px; }
 
         .project-carousel {
             display: flex; gap: 2rem; overflow-x: auto;
-            scroll-behavior: smooth;
             padding: 15px 5px 30px 5px;
             width: 100%;
             -ms-overflow-style: none; scrollbar-width: none;
@@ -275,13 +351,13 @@
         }
         
         .terminal-header {
-            background: #121418; padding: 8px 12px;
+            background: #0d0f13; padding: 8px 12px;
             display: flex; align-items: center; gap: 6px;
             border-bottom: 1px solid rgba(255,255,255,0.02);
             box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         
-        .terminal-body { padding: 18px; box-shadow: var(--neo-in); margin: 10px; border-radius: 6px; flex-grow: 1; }
+        .terminal-body { padding: 18px; box-shadow: var(--neo-in); margin: 10px; border-radius: 6px; flex-grow: 1; pointer-events: none;}
 
         .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--accent); min-height: 24px;}
         .terminal-card p.desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; opacity: 0; transition: opacity 0.5s ease 1s; }
@@ -291,20 +367,18 @@
         .terminal-card.typed .tech-row { opacity: 1; }
         .tech-tag {
             font-size: 0.65rem; padding: 3px 8px; border-radius: 3px;
-            background: #121418; color: var(--text-main); font-family: var(--font-code);
+            background: #0d0f13; color: var(--text-main); font-family: var(--font-code);
             border: 1px solid rgba(0, 242, 254, 0.1);
         }
 
-        .view-btn {
-            text-align: center; padding: 12px; font-size: 0.8rem; font-family: var(--font-code);
-            color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05);
-            background: transparent; border-left: none; border-right: none; border-bottom: none;
-            cursor: pointer; transition: 0.3s;
-        }
-        .view-btn:hover { background: rgba(0, 242, 254, 0.05); color: var(--accent); }
-
         .terminal-card:hover { transform: translateY(-6px); box-shadow: var(--neo-out-hover); border-color: rgba(0, 242, 254, 0.15); }
-        .terminal-card.clicked { animation: breatheClick 0.5s ease-in-out; }
+        .terminal-card.clicked { animation: breatheClick 0.4s ease-in-out; }
+
+        @keyframes breatheClick {
+            0% { transform: scale(1); box-shadow: var(--neo-out-hover); }
+            50% { transform: scale(0.96); box-shadow: var(--neo-in-deep); }
+            100% { transform: scale(1); box-shadow: var(--neo-out); }
+        }
 
         /* =========================================
            Visual Arts Gallery
@@ -372,7 +446,7 @@
            ========================================= */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(22, 24, 29, 0.85); backdrop-filter: blur(6px);
+            background: rgba(18, 20, 26, 0.9); backdrop-filter: blur(8px);
             z-index: 2000; display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: all 0.3s ease;
         }
@@ -383,7 +457,7 @@
             background: var(--bg-color); border-radius: 10px;
             box-shadow: var(--neo-out-hover); overflow: hidden;
             display: flex; flex-direction: column;
-            transform: scale(0.95) translateY(10px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.95) translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border: 1px solid rgba(0, 242, 254, 0.1);
         }
         .modal-overlay.active .modal-window { transform: scale(1) translateY(0); }
@@ -400,10 +474,10 @@
         .modal-actions { margin-top: 25px; display: flex; gap: 12px; }
         .btn-neo {
             padding: 10px 20px; border-radius: 5px; text-decoration: none;
-            color: var(--accent); font-family: var(--font-code); font-size: 0.85rem;
-            box-shadow: var(--neo-out); transition: 0.3s; border: 1px solid transparent; cursor: pointer; background: transparent;
+            color: var(--text-main); font-family: var(--font-code); font-size: 0.85rem;
+            background: var(--surface); box-shadow: var(--neo-out); transition: 0.3s; border: 1px solid transparent; cursor: pointer;
         }
-        .btn-neo:hover { box-shadow: var(--neo-in); transform: translateY(2px); border-color: rgba(0, 242, 254, 0.2); }
+        .btn-neo:hover { box-shadow: var(--neo-in); transform: translateY(2px); border-color: rgba(0, 242, 254, 0.2); color: var(--accent);}
 
         /* Custom Framed Lightbox */
         .lightbox-frame {
@@ -435,17 +509,24 @@
         .footer-logo { font-size: 1.2rem; font-family: var(--font-code); color: var(--text-muted); margin-bottom: 0.4rem;}
         .footer-text { font-size: 0.8rem; color: var(--text-muted); }
 
+        /* Tightly Optimized Mobile Breakpoints */
         @media (max-width: 900px) { .image-grid { column-count: 2; } }
+        @media (max-width: 800px) {
+            #hero { flex-direction: column; text-align: center; padding-top: 100px; gap: 2.5rem;}
+            .hero-text { align-items: center; text-align: center; }
+            .card { margin: 0 auto; }
+        }
         @media (max-width: 768px) {
             .nav-btn.left { left: 0px; }
             .nav-btn.right { right: 0px; }
         }
         @media (max-width: 600px) {
             section { padding: 50px 5%; }
+            .type-name-container { white-space: normal; overflow: visible; border-right: none; }
+            .type-name-container h1.dev-name { white-space: normal; animation: none; font-size: 1.7rem; border: none; }
             .image-grid { column-count: 1; }
             .modal-content { padding: 15px; }
-            .social-dock { padding: 8px 15px; }
-            .avatar-container { width: 120px; height: 120px; }
+            .social-dock { padding: 8px 15px; gap: 0.8rem; }
             .skills-grid { grid-template-columns: 1fr; }
             .terminal-card { min-width: 280px; max-width: 280px;}
         }
@@ -453,48 +534,54 @@
 </head>
 <body>
 
-    <!-- 3D Ambient Background -->
     <canvas id="matrix-canvas"></canvas>
     <div class="ambient-orb orb-1"></div>
     <div class="ambient-orb orb-2"></div>
 
-    <!-- 1. Initial Skeleton Loader -->
     <div id="skeleton-screen">
-        <div class="skel-pulse skel-avatar"></div>
+        <div class="skel-pulse skel-card"></div>
         <div class="skel-pulse skel-title"></div>
         <div class="skel-pulse skel-subtitle"></div>
         <div class="skel-pulse skel-line"></div>
         <div class="skel-pulse skel-line short"></div>
     </div>
 
-    <!-- Main Content -->
     <div id="main-content">
         
-        <!-- Hero Section -->
         <section id="hero" class="reveal-section">
-            <div class="avatar-container stagger-item">
-                <img src="assets/Profile.jpg" alt="Deepan Pramanick" onerror="this.src='https://ui-avatars.com/api/?name=Deepan+Pramanick&background=1b1d24&color=00f2fe&size=200'">
+            
+            <div class="profile-showcase" id="profile-dock">
+                <div class="card" id="card">
+                    <canvas id="cv"></canvas>
+                    <div class="scan"></div>
+                    <div class="br-corner tl"></div>
+                    <div class="br-corner tr"></div>
+                    <div class="br-corner bl"></div>
+                    <div class="br-corner br2"></div>
+                    <div class="hint" id="hint">TAP TO TRANSFORM</div>
+                </div>
                 <div class="status-dot" title="System Online"></div>
             </div>
             
-            <div class="type-name-container stagger-item">
-                <h1 class="dev-name code-font" id="typed-name"></h1>
-            </div>
-            
-            <p class="dev-title stagger-item">Web Developer | AI Engineer</p>
-            <p class="hero-bio stagger-item">
-                A third year BTech IT student from Institute of Engineering and Management currently aspiring to be an Associate Software Engineer. I combine strong technical and problem-solving ability with my leadership skills to plan and execute high end projects.
-            </p>
-            
-            <div class="social-dock stagger-item">
-                <a href="https://github.com/Deepan003" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/deepan-pramanick-3b3b90285/" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://www.instagram.com/its_dp_unofficial/" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
-                <a href="mailto:itsdpunofficial2020@gmail.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+            <div class="hero-text">
+                <div class="type-name-container stagger-item">
+                    <h1 class="dev-name code-font" id="typed-name"></h1>
+                </div>
+                
+                <p class="dev-title stagger-item">Web Developer | AI Engineer</p>
+                <p class="hero-bio stagger-item">
+                    A third year BTech IT student from Institute of Engineering and Management currently aspiring to be an Associate Software Engineer. I combine strong technical and problem-solving ability with my leadership skills to plan and execute high end projects.
+                </p>
+                
+                <div class="social-dock stagger-item">
+                    <a href="https://github.com/Deepan003" target="_blank" class="social-btn"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/deepan-pramanick-3b3b90285/" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.instagram.com/its_dp_unofficial/" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:itsdpunofficial2020@gmail.com" class="social-btn"><i class="fas fa-envelope"></i></a>
+                </div>
             </div>
         </section>
 
-        <!-- Capabilities Section -->
         <section id="skills" class="reveal-section">
             <h2 class="section-heading code-font decode-text" data-target-text="sys.getCapabilities()"></h2>
             <div class="skills-grid">
@@ -528,7 +615,6 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="reveal-section">
             <h2 class="section-heading code-font decode-text" data-target-text="dir ./projects"></h2>
             
@@ -549,7 +635,6 @@
                                 <span class="tech-tag">RNA-Seq</span><span class="tech-tag">Bioinformatics</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'pneumonia')">
@@ -564,7 +649,6 @@
                                 <span class="tech-tag">CNN</span><span class="tech-tag">Deep Learning</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'lifescience')">
@@ -579,7 +663,6 @@
                                 <span class="tech-tag">React</span><span class="tech-tag">TypeScript</span><span class="tech-tag">Node.js</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'estatix')">
@@ -589,12 +672,11 @@
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Online Marketplace"></span><span class="cursor"></span></h3>
-                            <p class="desc">Full-stack real estate web application built with Next.js, TypeScript, and Tailwind CSS.</p>
+                            <p class="desc">Full-stack real estate web application marketplace built with Next.js, TypeScript, and Tailwind CSS.</p>
                             <div class="tech-row">
                                 <span class="tech-tag">Next.js</span><span class="tech-tag">Tailwind CSS</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'ecofloors')">
@@ -609,7 +691,6 @@
                                 <span class="tech-tag">Frontend</span><span class="tech-tag">Eco-Tech</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'auctora')">
@@ -624,7 +705,6 @@
                                 <span class="tech-tag">Flutter</span><span class="tech-tag">Backend</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'sentiment')">
@@ -639,7 +719,6 @@
                                 <span class="tech-tag">Neural Networks</span><span class="tech-tag">AI</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'sales')">
@@ -654,7 +733,6 @@
                                 <span class="tech-tag">Frontend</span><span class="tech-tag">Analytics</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                     <div class="terminal-card" onclick="handleProjectClick(this, 'portfolio')">
@@ -669,7 +747,6 @@
                                 <span class="tech-tag">Frontend</span><span class="tech-tag">UI/UX</span>
                             </div>
                         </div>
-                        <div class="view-btn">./execute_report</div>
                     </div>
 
                 </div>
@@ -678,7 +755,6 @@
             </div>
         </section>
 
-        <!-- Photography Section -->
         <section id="photography" class="reveal-section">
             <h2 class="section-heading code-font decode-text" data-target-text="render(Visual_Arts)"></h2>
             <div class="image-grid stagger-item">
@@ -691,7 +767,6 @@
             </div>
         </section>
 
-        <!-- Achievements Section -->
         <section id="achievements" class="reveal-section">
             <h2 class="section-heading code-font decode-text" data-target-text="fetch(/achievements)"></h2>
             <div class="achievements-grid">
@@ -748,16 +823,12 @@
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="reveal-section">
             <h2 class="footer-logo">EOF // Deepan Pramanick</h2>
             <p class="footer-text">&copy; 2026. Engineered with precision.</p>
         </footer>
     </div>
 
-    <!-- Modals -->
-    
-    <!-- Project Report Modal -->
     <div id="project-modal" class="modal-overlay" onclick="closeModalOutside(event, 'project-modal')">
         <div class="modal-window">
             <div class="terminal-header">
@@ -767,12 +838,10 @@
                 <span class="code-font" style="color:#777; font-size:0.7rem; margin-left:10px;">Execution_Report.md</span>
             </div>
             <div class="modal-content" id="report-content">
-                <!-- JS Injected Content -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- Image Lightbox / Achievement Modal -->
     <div id="image-modal" class="modal-overlay" onclick="closeModalOutside(event, 'image-modal')">
         <div class="lightbox-frame">
             <div class="terminal-header" style="width: 100%; border-radius: 10px 10px 0 0; background: #121418;">
@@ -787,10 +856,13 @@
         </div>
     </div>
 
-    <!-- JavaScript Logic -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    
     <script>
-        // 1. Prominent Matrix Background
+        /* =========================================
+           1. Fixed Matrix Background Effect & Bridge Export
+           ========================================= */
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         
@@ -798,16 +870,19 @@
         canvas.height = window.innerHeight;
         
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%\"'#&_(),.;:?!\\|{}<>[]^~";
-        const fontSize = 18; 
+        const fontSize = 24; 
         const columns = canvas.width / fontSize;
         const drops = [];
         for(let x = 0; x < columns; x++) drops[x] = 1; 
+
+        // Export coordinates globally so the profile canvas can "feel" the matrix drops
+        window.matrixCtxObj = { drops: drops, fontSize: fontSize, columns: columns };
 
         function drawMatrix() {
             ctx.fillStyle = 'rgba(22, 24, 29, 0.15)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            ctx.fillStyle = 'rgba(0, 242, 254, 0.35)'; 
+            ctx.fillStyle = 'rgba(0, 242, 254, 0.45)'; 
             ctx.font = fontSize + 'px monospace';
             
             for(let i = 0; i < drops.length; i++) {
@@ -823,9 +898,12 @@
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            window.matrixCtxObj.columns = canvas.width / fontSize;
         });
 
-        // 2. Comprehensive Project Database
+        /* =========================================
+           2. Comprehensive Project Database
+           ========================================= */
         const db = {
             progene: {
                 title: "ProGene AI",
@@ -901,7 +979,9 @@
             }
         };
 
-        // 3. Preloader & Name Typing Logic
+        /* =========================================
+           3. Preloader, GSAP Entry & Name Typing Logic
+           ========================================= */
         window.addEventListener('load', () => {
             const skel = document.getElementById('skeleton-screen');
             const main = document.getElementById('main-content');
@@ -913,28 +993,51 @@
                     main.classList.add('loaded');
                     initObserver();
                     
+                    // Specific GSAP Entrance for the Interactive Profile Dock without 3D rotation
+                    gsap.fromTo("#profile-dock", 
+                        { scale: 0.8, opacity: 0, y: 40 }, 
+                        { scale: 1, opacity: 1, y: 0, duration: 1.5, ease: "expo.out", onComplete: () => {
+                             // Apply CSS levitation loop after entrance
+                             document.getElementById('profile-dock').style.animation = 'levitate 6s ease-in-out infinite';
+                        }}
+                    );
+
+                    // Initialize VanillaTilt explicitly WITHOUT the profile dock to keep it float-only
+                    setTimeout(() => {
+                        VanillaTilt.init(document.querySelectorAll(".terminal-card, .skill-box, .achieve-card"), {
+                            max: 5, speed: 400, glare: true, "max-glare": 0.1
+                        });
+                    }, 1500);
+                    
                     const nameEl = document.getElementById('typed-name');
                     const fullName = "<Deepan_Pramanick />";
                     let i = 0;
-                    nameEl.classList.add('typing-active');
                     
-                    function typeName() {
-                        if (i < fullName.length) {
-                            nameEl.innerHTML += fullName.charAt(i);
-                            i++;
-                            setTimeout(typeName, 60);
-                        } else {
-                            nameEl.classList.remove('typing-active');
-                            nameEl.classList.add('typing-done');
+                    // Only run typing animation on non-tiny screens to prevent text wrap snapping
+                    if(window.innerWidth > 600) {
+                        nameEl.classList.add('typing-active');
+                        function typeName() {
+                            if (i < fullName.length) {
+                                nameEl.innerHTML += fullName.charAt(i);
+                                i++;
+                                setTimeout(typeName, 60);
+                            } else {
+                                nameEl.classList.remove('typing-active');
+                                nameEl.classList.add('typing-done');
+                            }
                         }
+                        setTimeout(typeName, 400); 
+                    } else {
+                        nameEl.innerHTML = fullName;
                     }
-                    setTimeout(typeName, 400); 
 
                 }, 500); 
             }, 1200); 
         });
 
-        // Software "Decode/Scramble" Text Effect
+        /* =========================================
+           4. Intersection Observer & Decode Effect
+           ========================================= */
         function decodeText(element) {
             const text = element.getAttribute('data-target-text');
             const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
@@ -956,7 +1059,6 @@
             }, 30);
         }
 
-        // 4. Intersection Observer (Reveal, Stagger, Terminal & Decode Typing)
         function initObserver() {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -971,14 +1073,12 @@
                                 }, index * 150);
                             });
 
-                            // Trigger Section Header Decode
                             const headings = entry.target.querySelectorAll('.decode-text:not(.decoded)');
                             headings.forEach(heading => {
                                 heading.classList.add('decoded');
                                 decodeText(heading);
                             });
 
-                            // Trigger project terminal typing
                             const cards = entry.target.querySelectorAll('.terminal-card:not(.typed)');
                             if(cards.length > 0) {
                                 cards.forEach((card, idx) => {
@@ -1001,7 +1101,6 @@
             document.querySelectorAll('.reveal-section').forEach(el => observer.observe(el));
         }
 
-        // Typewriter Logic
         function typeText(element, text, callback) {
             let i = 0;
             element.innerHTML = '';
@@ -1017,9 +1116,12 @@
             type();
         }
 
-        // 5. Fixed Carousel Drag & Auto-Scroll Logic
+        /* =========================================
+           5. Carousel Drag & Auto-Scroll Logic
+           ========================================= */
         const slider = document.getElementById('project-slider');
         let isDown = false;
+        let isDragging = false;
         let startX;
         let scrollLeft;
         let autoScrollInterval;
@@ -1039,9 +1141,7 @@
             }, 25);
         }
 
-        function stopAutoScroll() {
-            clearInterval(autoScrollInterval);
-        }
+        function stopAutoScroll() { clearInterval(autoScrollInterval); }
 
         slider.addEventListener('mouseenter', stopAutoScroll);
         slider.addEventListener('mouseleave', startAutoScroll);
@@ -1050,27 +1150,31 @@
 
         slider.addEventListener('mousedown', (e) => {
             isDown = true;
+            isDragging = false;
             slider.classList.add('active');
             startX = e.pageX - slider.offsetLeft;
             scrollLeft = slider.scrollLeft;
         });
         slider.addEventListener('mouseleave', () => {
             isDown = false;
+            isDragging = false;
             slider.classList.remove('active');
         });
         slider.addEventListener('mouseup', () => {
             isDown = false;
             slider.classList.remove('active');
+            setTimeout(() => isDragging = false, 50); 
         });
         slider.addEventListener('mousemove', (e) => {
             if (!isDown) return;
             e.preventDefault();
+            isDragging = true;
             const x = e.pageX - slider.offsetLeft;
             const walk = (x - startX) * 2; 
             slider.scrollLeft = scrollLeft - walk;
         });
 
-        startAutoScroll(); // Init loop
+        startAutoScroll(); 
 
         function scrollCarousel(dir) {
             stopAutoScroll();
@@ -1078,9 +1182,11 @@
             setTimeout(startAutoScroll, 3000); 
         }
 
-        // 6. Interactive Click & Modals
+        /* =========================================
+           6. Modals & Interactive Clicks
+           ========================================= */
         function handleProjectClick(cardElement, projectId) {
-            if(isDown) return; 
+            if(isDragging) return; 
 
             cardElement.classList.add('clicked');
             setTimeout(() => {
@@ -1123,7 +1229,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Shared Image Opener for Gallery
         function openImage(element) {
             const imgSrc = element.querySelector('img') ? element.querySelector('img').src : element; 
             document.getElementById('lightbox-img').src = typeof element === 'string' ? element : imgSrc;
@@ -1131,7 +1236,6 @@
             document.body.style.overflow = 'hidden';
         }
 
-        // Achievement Photo Opener
         function openAchievement(imgSrc) {
             const fallback = `https://via.placeholder.com/600x400/1b1d24/00f2fe?text=Achievement+Image`;
             document.getElementById('lightbox-img').src = imgSrc;
@@ -1150,6 +1254,374 @@
                 closeModal(modalId);
             }
         }
+
+        /* =========================================
+           7. Advanced Interactive Photo Mechanism
+           (High Frequency Matrix Ripple Edition)
+           ========================================= */
+        (() => {
+            'use strict';
+            const FONT_PX      = 2;       
+            const CYCLE_MS     = 10000;   
+            const TRANSFORM_MS = 3200;    
+            const REVERSE_MS   = 2800;    
+
+            const card = document.getElementById('card');
+            const cv   = document.getElementById('cv');
+
+            const CW = 340; 
+            const CH = 453; 
+
+            const DPR = Math.min(window.devicePixelRatio || 1, 2);
+            const RW  = Math.round(CW * DPR);   
+            const RH  = Math.round(CH * DPR);   
+
+            cv.width  = RW;
+            cv.height = RH;
+            const ctx = cv.getContext('2d', { alpha: false, willReadFrequently: false });
+
+            const FONT_R = FONT_PX * DPR;       
+            const COLS   = Math.floor(RW / FONT_R);
+            const ROWS   = Math.floor(RH / FONT_R);
+            const TOTAL  = COLS * ROWS;
+
+            const HOVER_R = Math.round(RW * 0.38);
+
+            let phase    = 'real';  
+            let waveT    = 0;
+            let glitchT  = 0;       
+            let waveDist = null;
+            let transforming = false;
+            let cycleTO  = null;
+            let cellJitter = null;  
+
+            let pointerOn = false;
+            let pointerX  = -9999;
+            let pointerY  = -9999;
+
+            let real1 = null;   
+            let bin2  = null;   
+
+            const outBuf  = new Uint8ClampedArray(RW * RH * 4);
+            const outData = new ImageData(outBuf, RW, RH);
+
+            const waveAlpha = new Float32Array(TOTAL);
+            let lastWaveT = -1;
+            let lastPhase = '';
+
+            function recomputeWave() {
+              const BW = 0.038; 
+              for (let i = 0; i < TOTAL; i++) {
+                const jit = cellJitter ? cellJitter[i] : 0;
+                const ov  = (waveT - waveDist[i] + jit) / BW;
+                waveAlpha[i] = ov <= 0 ? 0 : ov >= 1 ? 1 : ov * ov * (3 - 2 * ov);
+              }
+              lastWaveT = waveT; lastPhase = phase;
+            }
+
+            function buildAll() {
+              const o1  = new OffscreenCanvas(RW, RH);
+              const o1c = o1.getContext('2d');
+              o1c.drawImage(img1, 0, 0, RW, RH);
+              real1 = o1c.getImageData(0, 0, RW, RH).data;
+
+              const o2r  = new OffscreenCanvas(RW, RH);
+              const o2rc = o2r.getContext('2d');
+              o2rc.drawImage(img2, 0, 0, RW, RH);
+              const srcPx = o2rc.getImageData(0, 0, RW, RH).data;
+
+              const o2  = new OffscreenCanvas(RW, RH);
+              const o2c = o2.getContext('2d');
+              o2c.fillStyle   = '#06080d';
+              o2c.fillRect(0, 0, RW, RH);
+              o2c.font         = `bold ${Math.ceil(FONT_R)}px "Courier New"`;
+              o2c.textBaseline = 'top';
+
+              for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                  const sx  = Math.min(Math.floor(c * FONT_R + FONT_R * 0.5), RW - 1);
+                  const sy  = Math.min(Math.floor(r * FONT_R + FONT_R * 0.5), RH - 1);
+                  const pi  = (sy * RW + sx) * 4;
+                  const R   = srcPx[pi], G = srcPx[pi+1], B = srcPx[pi+2];
+
+                  const lum = Math.pow((R * 0.299 + G * 0.587 + B * 0.114) / 255, 0.72);
+                  const cr = Math.floor(Math.pow(lum, 1.9) * 0) | 0;
+                  const cg = Math.floor(lum * 242) | 0; 
+                  const cb = Math.floor(lum * 254) | 0; 
+                  const ch = lum > 0.35 ? '1' : '0';
+
+                  o2c.fillStyle = `rgb(${cr >> 3},${cg >> 3},${cb >> 3})`;
+                  o2c.fillRect(c * FONT_R, r * FONT_R, FONT_R, FONT_R);
+                  o2c.fillStyle = `rgb(${cr},${cg},${cb})`;
+                  o2c.fillText(ch, c * FONT_R, r * FONT_R);
+                }
+              }
+              bin2 = o2c.getImageData(0, 0, RW, RH).data;
+            }
+
+            function buildWaveDist(corner) {
+              const ox = corner.includes('r') ? RW : 0;
+              const oy = corner.includes('b') ? RH : 0;
+              waveDist = new Float32Array(TOTAL);
+              let maxD = 0;
+              for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                  const cx = c * FONT_R + FONT_R * 0.5;
+                  const cy = r * FONT_R + FONT_R * 0.5;
+                  const eu = Math.hypot(cx - ox, cy - oy);
+                  const ch = Math.max(Math.abs(cx - ox), Math.abs(cy - oy));
+                  const d  = eu * 0.65 + ch * 0.35;
+                  waveDist[r * COLS + c] = d;
+                  if (d > maxD) maxD = d;
+                }
+              }
+              for (let i = 0; i < TOTAL; i++) waveDist[i] /= maxD;
+            }
+
+            function render() {
+              requestAnimationFrame(render);
+              if (!real1 || !bin2) return;
+
+              const realOnTop = (phase === 'real' || phase === 'glitch' || phase === 'toBinary');
+              const front     = realOnTop ? real1 : bin2;
+              const back      = realOnTop ? bin2  : real1;
+              const trans     = (phase === 'toBinary' || phase === 'toReal');
+              const glitching = (phase === 'glitch' || phase === 'glitch2');
+
+              if (trans && (waveT !== lastWaveT || phase !== lastPhase)) recomputeWave();
+
+              const hovering = pointerOn && pointerX >= 0 && pointerX < RW && pointerY >= 0 && pointerY < RH;
+              const R_IN     = HOVER_R * 0.48;
+              const R_OUT    = HOVER_R;
+              const R_RNG    = R_OUT - R_IN;
+
+              const glitchSeed = glitching ? Math.floor(performance.now() / 40) : 0;
+              const glitchStrength = glitching ? glitchT * 0.85 : 0;
+
+              // Pre-calculate active background matrix drops interacting with the card's vertical footprint
+              const rect = card.getBoundingClientRect();
+              const activeMatrixDrops = {};
+              if (window.matrixCtxObj) {
+                  const m = window.matrixCtxObj;
+                  for(let c = 0; c < m.columns; c++) {
+                      const dropYScreen = m.drops[c] * m.fontSize;
+                      // Expanded check radius to catch the matrix "trail" passing over the profile
+                      if (dropYScreen >= rect.top - 100 && dropYScreen <= rect.bottom + 400) {
+                          activeMatrixDrops[c] = dropYScreen;
+                      }
+                  }
+              }
+
+              for (let py = 0; py < RH; py++) {
+                let glitchOffX = 0;
+                if (glitching && glitchStrength > 0) {
+                  const rowSeed = (py * 7 + glitchSeed * 13) & 0xffff;
+                  const band    = (rowSeed * 0x9e37 >> 8) & 0xff;
+                  if (band < 38 * glitchStrength) {
+                    glitchOffX = Math.round(((rowSeed * 0x4f1b) & 0xff) / 255 * 28 * glitchStrength) * (rowSeed & 1 ? 1 : -1);
+                  }
+                }
+
+                for (let px = 0; px < RW; px++) {
+                  let piRead = (py * RW + px) * 4;
+
+                  // ---- HIGH FREQUENCY MATRIX POOL REFRACTION EFFECT ----
+                  let matrixJitterX = 0;
+                  const BORDER = 55; // Slightly wider border interaction
+                  const edgeDistX = Math.min(px, RW - 1 - px);
+                  const edgeDistY = Math.min(py, RH - 1 - py);
+                  
+                  if (edgeDistX < BORDER || edgeDistY < BORDER) {
+                      if (window.matrixCtxObj) {
+                           const screenX = rect.left + (px / RW) * rect.width;
+                           const col = Math.floor(screenX / window.matrixCtxObj.fontSize);
+                           
+                           if (activeMatrixDrops[col] !== undefined) {
+                                const dropYScreen = activeMatrixDrops[col];
+                                const screenY = rect.top + (py / RH) * rect.height;
+                                const distance = dropYScreen - screenY;
+                                
+                                // Trigger heavily when leading edge approaches, and sustain through the "trail" (up to 300px above)
+                                if (distance > -80 && distance < 300) { 
+                                     const intensity = 1 - (Math.min(edgeDistX, edgeDistY) / BORDER);
+                                     const trailFalloff = 1 - Math.max(0, distance / 300);
+                                     
+                                     // High frequency threshold
+                                     if (Math.random() > 0.1) {
+                                        matrixJitterX = (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 45 * intensity * trailFalloff);
+                                     }
+                                }
+                           }
+                      }
+                  }
+
+                  if (matrixJitterX !== 0) {
+                      const readX = Math.max(0, Math.min(RW - 1, px + matrixJitterX));
+                      piRead = (py * RW + readX) * 4;
+                  }
+                  // ----------------------------------------
+
+                  let fA = 1;
+                  if (trans) {
+                    const col = Math.floor(px / FONT_R);
+                    const row = Math.floor(py / FONT_R);
+                    fA = 1 - waveAlpha[row * COLS + col];
+                  }
+
+                  let rr, gg, bb;
+                  if (fA >= 1) {
+                    rr = front[piRead]; gg = front[piRead+1]; bb = front[piRead+2];
+                  } else if (fA <= 0) {
+                    rr = back[piRead];  gg = back[piRead+1];  bb = back[piRead+2];
+                  } else {
+                    rr = front[piRead]   * fA + back[piRead]   * (1 - fA);
+                    gg = front[piRead+1] * fA + back[piRead+1] * (1 - fA);
+                    bb = front[piRead+2] * fA + back[piRead+2] * (1 - fA);
+                  }
+
+                  if (glitching && glitchStrength > 0) {
+                    if (glitchOffX !== 0) {
+                      const pxR = Math.min(RW-1, Math.max(0, px + glitchOffX));
+                      const pxB = Math.min(RW-1, Math.max(0, px - glitchOffX));
+                      const piR = (py * RW + pxR) * 4;
+                      const piB = (py * RW + pxB) * 4;
+                      rr = front[piR];
+                      bb = front[piB + 2];
+                    }
+                    const cellSeed = (px * 3 + py * 17 + glitchSeed * 7) & 0xffff;
+                    if ((cellSeed & 0xff) < 6 * glitchStrength) {
+                      rr = gg = bb = (cellSeed & 1) ? 180 : 0;
+                    }
+                  }
+
+                  if (hovering && Math.abs(px - pointerX) < R_OUT && Math.abs(py - pointerY) < R_OUT) {
+                    const dx = px - pointerX, dy = py - pointerY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < R_OUT) {
+                      let t = dist <= R_IN ? 1 : 1 - ((dist - R_IN) / R_RNG);
+                      if (t > 0) {
+                        rr += (back[piRead]   - rr) * t;
+                        gg += (back[piRead+1] - gg) * t;
+                        bb += (back[piRead+2] - bb) * t;
+                      }
+                    }
+                  }
+
+                  const piWrite = (py * RW + px) * 4;
+                  outBuf[piWrite]   = rr;
+                  outBuf[piWrite+1] = gg;
+                  outBuf[piWrite+2] = bb;
+                  outBuf[piWrite+3] = 255;
+                }
+              }
+              ctx.putImageData(outData, 0, 0);
+            }
+
+            function cancelCycle() { if (cycleTO) { clearTimeout(cycleTO); cycleTO = null; } }
+            function scheduleCycle() { cancelCycle(); cycleTO = setTimeout(() => doTransform(), CYCLE_MS); }
+
+            function doTransform() {
+              if (transforming) return;
+              transforming = true;
+              cancelCycle();
+              const GLITCH_MS  = 380;   
+              const corners    = ['tl', 'tr', 'bl', 'br'];
+              const corner     = corners[Math.floor(Math.random() * 4)];
+              buildWaveDist(corner);
+              cellJitter = new Float32Array(TOTAL);
+              for (let i = 0; i < TOTAL; i++) cellJitter[i] = (Math.random() * 2 - 1) * 0.045;
+
+              const goForward = (phase === 'real');
+              const dur       = goForward ? TRANSFORM_MS : REVERSE_MS;
+              const glitchPhase = goForward ? 'glitch' : 'glitch2';
+              phase   = glitchPhase;
+              glitchT = 0;
+              const g0 = performance.now();
+
+              function glitchTick(now) {
+                glitchT = Math.min((now - g0) / GLITCH_MS, 1);
+                if (glitchT < 1) requestAnimationFrame(glitchTick);
+                else startWave();
+              }
+              requestAnimationFrame(glitchTick);
+
+              function startWave() {
+                glitchT = 0;
+                phase   = goForward ? 'toBinary' : 'toReal';
+                waveT   = 0;
+                const t0 = performance.now();
+                function waveTick(now) {
+                  const raw = Math.min((now - t0) / dur, 1);
+                  waveT = raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2;
+                  if (raw < 1) requestAnimationFrame(waveTick);
+                  else {
+                    waveT = goForward ? 1 : 0;
+                    phase = goForward ? 'binary' : 'real';
+                    cellJitter = null;
+                    transforming = false;
+                    scheduleCycle();
+                  }
+                }
+                requestAnimationFrame(waveTick);
+              }
+            }
+
+            function toRender(clientX, clientY) {
+              const r = card.getBoundingClientRect();
+              return { x: (clientX - r.left) / r.width * RW, y: (clientY - r.top) / r.height * RH };
+            }
+
+            card.addEventListener('mousemove', e => {
+              const p = toRender(e.clientX, e.clientY);
+              pointerX = p.x; pointerY = p.y; pointerOn = true;
+            });
+            card.addEventListener('mouseenter', () => { pointerOn = true; });
+            card.addEventListener('mouseleave', () => { pointerOn = false; pointerX = -9999; pointerY = -9999; });
+            card.addEventListener('click', () => { doTransform(); scheduleCycle(); });
+
+            card.addEventListener('touchstart', e => {
+              e.preventDefault();
+              const t = e.touches[0];
+              const p = toRender(t.clientX, t.clientY);
+              pointerX = p.x; pointerY = p.y; pointerOn = true;
+              doTransform(); scheduleCycle();
+              const hint = document.getElementById('hint');
+              if (hint) { hint.classList.add('gone'); setTimeout(() => hint.remove(), 1200); }
+            }, { passive: false });
+
+            card.addEventListener('touchmove', e => {
+              e.preventDefault();
+              const t = e.touches[0];
+              const p = toRender(t.clientX, t.clientY);
+              pointerX = p.x; pointerY = p.y;
+            }, { passive: false });
+
+            card.addEventListener('touchend', () => { pointerOn = false; });
+
+            let img1Ready = false, img2Ready = false;
+            const img1 = new Image(); img1.src = 'assets/Profile.jpg';
+            const img2 = new Image(); img2.src = 'assets/Profile2.jpg';
+
+            function tryBoot() {
+              if (!img1Ready || !img2Ready) return;
+              buildAll();
+              phase = 'real'; waveT = 0;
+              requestAnimationFrame(render);
+              scheduleCycle();
+              if (!('ontouchstart' in window)) {
+                const h = document.getElementById('hint');
+                if (h) h.remove();
+              }
+            }
+
+            img1.onload  = () => { img1Ready = true; tryBoot(); };
+            img2.onload  = () => { img2Ready = true; tryBoot(); };
+            img1.onerror = () => { img1Ready = true; tryBoot(); };
+            img2.onerror = () => { img2Ready = true; tryBoot(); };
+            if (img1.complete && img1.naturalWidth) img1Ready = true;
+            if (img2.complete && img2.naturalWidth) img2Ready = true;
+            if (img1Ready && img2Ready) tryBoot();
+        })();
     </script>
 </body>
 </html>
