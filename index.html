@@ -13,22 +13,22 @@
     
     <style>
         /* =========================================
-           Dark Neomorphic & Glassmorphic Variables
+           Dark Neomorphic & Terminal Theme Variables
            ========================================= */
         :root {
-            --bg-color: #030406; /* Deeper, richer black */
-            --surface: rgba(18, 21, 28, 0.65);
-            --surface-light: rgba(27, 30, 38, 0.8);
-            --text-main: #f9fafb; /* Pure white for headings */
-            --text-muted: #9ca3af;
-            --accent: #3b82f6; /* Sleeker professional blue */
-            --accent-glow: rgba(59, 130, 246, 0.4);
+            --bg-color: #06080d; 
+            --surface: #12151c;
+            --surface-light: #1b1e26;
+            --text-main: #d1d5db;
+            --text-muted: #6b7280;
+            --accent: #00f2fe;
+            --accent-glow: rgba(0, 242, 254, 0.25);
             
-            /* Sleek Shadows & Glass Borders */
-            --neo-out: 0 8px 32px rgba(0, 0, 0, 0.4);
-            --neo-out-hover: 0 12px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.1);
-            --neo-in: inset 0 2px 4px rgba(0,0,0,0.5);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.06);
+            /* Sleek Neomorphic Shadows */
+            --neo-out: 7px 7px 14px #040508, -7px -7px 14px #080b12;
+            --neo-out-hover: 10px 10px 20px #030407, -10px -10px 20px #090c13;
+            --neo-in: inset 5px 5px 10px #040508, inset -5px -5px 10px #080b12;
+            --neo-in-deep: inset 8px 8px 16px #030407, inset -8px -8px 16px #090c13;
 
             --font-code: 'Fira Code', monospace;
             --font-ui: 'Inter', sans-serif;
@@ -46,13 +46,13 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             font-family: var(--font-ui);
-            font-size: 14px; 
+            font-size: 13px; 
             line-height: 1.6;
             overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        h1, h2, h3, h4 { font-weight: 600; color: #ffffff; }
+        h1, h2, h3, h4 { font-weight: 500; }
         .code-font { font-family: var(--font-code); }
 
         /* =========================================
@@ -64,12 +64,12 @@
         }
         
         .ambient-orb {
-            position: fixed; border-radius: 50%; filter: blur(140px);
-            z-index: -1; opacity: 0.2; pointer-events: none;
+            position: fixed; border-radius: 50%; filter: blur(120px);
+            z-index: -1; opacity: 0.15; pointer-events: none;
             animation: floatOrb 25s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
         }
         .orb-1 { width: 45vw; height: 45vw; background: var(--accent); top: -10%; left: -10%; }
-        .orb-2 { width: 35vw; height: 35vw; background: #8b5cf6; bottom: -10%; right: -10%; animation-delay: -7s; }
+        .orb-2 { width: 35vw; height: 35vw; background: #3b82f6; bottom: -10%; right: -10%; animation-delay: -7s; }
 
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
@@ -125,7 +125,7 @@
         .stagger-item.visible { opacity: 1; transform: translateY(0); }
 
         /* =========================================
-           Hero Section
+           Hero Section (Left-Aligned Layout)
            ========================================= */
         #hero {
             min-height: 100vh;
@@ -133,7 +133,7 @@
             flex-direction: row;
             align-items: center;
             justify-content: center;
-            gap: 5rem;
+            gap: 4rem;
             padding: 2rem 5%;
             max-width: 1200px;
             margin: 0 auto;
@@ -148,20 +148,22 @@
             max-width: 600px;
         }
 
+        /* -----------------------------------------
+           Interactive Card & Dock
+           ----------------------------------------- */
         @keyframes levitate {
             0% { transform: translateY(0px); box-shadow: var(--neo-out); }
-            50% { transform: translateY(-12px); box-shadow: 0 25px 40px rgba(0,0,0,0.5), 0 0 30px var(--accent-glow); }
+            50% { transform: translateY(-12px); box-shadow: 0 20px 30px rgba(0,0,0,0.4), 0 0 25px rgba(0, 242, 254, 0.12); }
             100% { transform: translateY(0px); box-shadow: var(--neo-out); }
         }
 
         .profile-showcase {
             position: relative;
             padding: 12px;
-            border-radius: 16px;
+            border-radius: 12px;
             background: var(--surface);
-            backdrop-filter: blur(12px);
             box-shadow: var(--neo-out);
-            border: 1px solid rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.02);
             opacity: 0; 
         }
 
@@ -169,10 +171,10 @@
             position: relative;
             width: min(340px, calc(100vw - 3rem));
             aspect-ratio: 3 / 4;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
             cursor: crosshair;
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 50px 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 0 1px rgba(0, 242, 254, 0.1), 0 0 50px 5px rgba(0, 242, 254, 0.05);
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             flex-shrink: 0;
@@ -196,7 +198,7 @@
 
         .br-corner {
             position: absolute; width: 16px; height: 16px;
-            border-color: rgba(255, 255, 255, 0.4); border-style: solid; border-width: 0;
+            border-color: rgba(0, 242, 254, 0.6); border-style: solid; border-width: 0;
             z-index: 6; pointer-events: none;
         }
         .tl  { top:8px;    left:8px;   border-top-width:1.5px;    border-left-width:1.5px;  }
@@ -206,11 +208,10 @@
 
         .hint {
             position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-            font: 10px/1 var(--font-code); color: rgba(255, 255, 255, 0.8);
+            font: 10px/1 var(--font-code); color: rgba(0, 242, 254, 0.6);
             letter-spacing: 0.14em; pointer-events: none; z-index: 7;
             white-space: nowrap;
             opacity: 1; transition: opacity 1s ease;
-            text-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
         .hint.gone { opacity: 0; }
         
@@ -222,86 +223,83 @@
             z-index: 20;
         }
 
+        /* ----------------------------------------- */
+
         .type-name-container {
             display: inline-block;
             margin-bottom: 0.5rem;
             max-width: 100%;
         }
         h1.dev-name { 
-            font-size: clamp(1.8rem, 4.5vw, 3.8rem); 
-            color: #ffffff; /* Replaced greenish blue with white */
+            font-size: clamp(1.6rem, 4.5vw, 3.5rem); 
+            color: var(--accent);
             overflow: hidden; 
             white-space: nowrap; 
-            border-right: 0.1em solid var(--accent);
+            border-right: 0.15em solid var(--accent);
             margin: 0;
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+            text-shadow: 0 0 10px var(--accent-glow);
         }
         .typing-active {
             animation: typing 2s steps(20, end), blink-caret 0.75s step-end infinite;
         }
         .typing-done {
-            border-right: 0.1em solid transparent;
+            border-right: 0.15em solid transparent;
             animation: blink-caret 0.75s step-end infinite;
         }
 
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--accent); } }
 
-        .dev-title { font-size: clamp(0.9rem, 2vw, 1.1rem); color: var(--accent); margin-bottom: 1.5rem; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;}
-        .hero-bio { font-size: 1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 100%; line-height: 1.7;}
+        .dev-title { font-size: clamp(0.85rem, 2vw, 1rem); color: var(--text-muted); margin-bottom: 1.5rem; letter-spacing: 2px; text-transform: uppercase; }
+        .hero-bio { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 2rem; max-width: 100%; }
         
         .social-dock {
-            display: flex; gap: 1rem; padding: 12px 24px;
-            border-radius: 30px; box-shadow: var(--neo-out); 
-            background: var(--surface); backdrop-filter: blur(10px);
-            border: var(--glass-border);
+            display: flex; gap: 1rem; padding: 10px 20px;
+            border-radius: 30px; box-shadow: var(--neo-out); background: var(--surface);
             flex-wrap: wrap; justify-content: center;
         }
         .social-btn {
-            color: var(--text-main); font-size: 1.2rem; transition: 0.3s;
-            text-decoration: none; width: 40px; height: 40px;
+            color: var(--text-muted); font-size: 1.2rem; transition: 0.3s;
+            text-decoration: none; width: 38px; height: 38px;
             display: flex; justify-content: center; align-items: center;
             border-radius: 50%;
-            background: rgba(255,255,255,0.03);
         }
-        .social-btn:hover { color: #fff; background: var(--accent); box-shadow: 0 0 15px var(--accent-glow); transform: translateY(-3px); }
+        .social-btn:hover { color: var(--accent); box-shadow: var(--neo-in); transform: scale(0.95); }
 
         /* =========================================
            General Section Styling
            ========================================= */
-        section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; }
+        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
         
         .section-heading {
-            text-align: center; font-size: 2rem; margin-bottom: 4rem;
-            color: #ffffff; position: relative; letter-spacing: 1px;
-            min-height: 40px; 
+            text-align: center; font-size: 1.8rem; margin-bottom: 3.5rem;
+            color: var(--text-main); position: relative; letter-spacing: 1px;
+            min-height: 35px; 
         }
         .section-heading::after {
-            content: ''; display: block; width: 40px; height: 3px;
+            content: ''; display: block; width: 35px; height: 2px;
             background: var(--accent); border-radius: 2px;
-            margin: 15px auto 0; box-shadow: 0 0 10px var(--accent-glow);
+            margin: 15px auto 0; box-shadow: 0 0 8px var(--accent-glow);
         }
 
         /* =========================================
            Skills Section
            ========================================= */
         .skills-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem;
         }
         .skill-box {
-            padding: 2rem; border-radius: 16px; box-shadow: var(--neo-out);
-            background: var(--surface); border: var(--glass-border);
-            backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 1.8rem; border-radius: 12px; box-shadow: var(--neo-out);
+            background: var(--surface); border: 1px solid rgba(255,255,255,0.01);
         }
-        .skill-box h3 { margin-bottom: 1.5rem; color: #ffffff; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;}
-        .neo-pill-container { display: flex; flex-wrap: wrap; gap: 10px; }
+        .skill-box h3 { margin-bottom: 1.2rem; color: var(--accent); font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;}
+        .neo-pill-container { display: flex; flex-wrap: wrap; gap: 8px; }
         .neo-pill {
-            padding: 6px 14px; border-radius: 20px; font-size: 0.85rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3); color: var(--text-main);
-            transition: all 0.3s; cursor: default; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.03);
+            padding: 5px 12px; border-radius: 20px; font-size: 0.8rem;
+            box-shadow: var(--neo-out); color: var(--text-muted);
+            transition: all 0.3s; cursor: default; background: var(--bg-color);
         }
-        .neo-pill:hover { background: var(--accent); color: #fff; box-shadow: 0 0 15px var(--accent-glow); border-color: transparent;}
+        .neo-pill:hover { box-shadow: var(--neo-in); color: var(--accent); }
 
         /* =========================================
            Projects - Moving Carousel
@@ -317,9 +315,8 @@
             position: absolute;
             z-index: 10;
             background: var(--surface-light);
-            border: var(--glass-border);
-            backdrop-filter: blur(5px);
-            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
             width: 50px; height: 50px;
             border-radius: 50%;
             cursor: pointer;
@@ -328,13 +325,13 @@
             display: flex; justify-content: center; align-items: center;
             font-size: 1.2rem;
         }
-        .nav-btn:hover { background: var(--accent); color: #fff; transform: scale(1.05); }
+        .nav-btn:hover { box-shadow: var(--neo-in); transform: scale(0.95); color: var(--accent);}
         .nav-btn.left { left: -25px; }
         .nav-btn.right { right: -25px; }
 
         .project-carousel {
-            display: flex; gap: 2.5rem; overflow-x: auto;
-            padding: 20px 10px 40px 10px;
+            display: flex; gap: 2rem; overflow-x: auto;
+            padding: 15px 5px 30px 5px;
             width: 100%;
             -ms-overflow-style: none; scrollbar-width: none;
             cursor: grab;
@@ -342,68 +339,60 @@
         .project-carousel::-webkit-scrollbar { display: none; }
         .project-carousel.active { cursor: grabbing; }
 
-        /* Added mac-dot CSS for the terminal headers */
-        .mac-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
-        .mac-dot.red { background: #ff5f56; }
-        .mac-dot.yellow { background: #ffbd2e; }
-        .mac-dot.green { background: #27c93f; }
-
         .terminal-card {
-            min-width: 340px; max-width: 340px;
+            min-width: 320px; max-width: 320px;
             flex-shrink: 0;
-            background: var(--surface); border-radius: 12px;
+            background: var(--surface); border-radius: 10px;
             box-shadow: var(--neo-out); overflow: hidden;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer; display: flex; flex-direction: column;
-            border: var(--glass-border);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.02);
         }
         
         .terminal-header {
-            background: rgba(0,0,0,0.4); padding: 10px 15px;
-            display: flex; align-items: center; gap: 8px;
-            border-bottom: var(--glass-border);
+            background: #0d0f13; padding: 8px 12px;
+            display: flex; align-items: center; gap: 6px;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
         
-        .terminal-body { padding: 22px; flex-grow: 1; pointer-events: none;}
+        .terminal-body { padding: 18px; box-shadow: var(--neo-in); margin: 10px; border-radius: 6px; flex-grow: 1; pointer-events: none;}
 
-        .terminal-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: #ffffff; min-height: 28px;}
-        .terminal-card p.desc { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-top: 10px; opacity: 0; transition: opacity 0.5s ease 1s; }
+        .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px; color: var(--accent); min-height: 24px;}
+        .terminal-card p.desc { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; opacity: 0; transition: opacity 0.5s ease 1s; }
         .terminal-card.typed p.desc { opacity: 1; }
 
-        .tech-row { margin-top: 16px; display: flex; gap: 8px; flex-wrap: wrap; opacity: 0; transition: opacity 0.5s ease 1.2s;}
+        .tech-row { margin-top: 12px; display: flex; gap: 6px; flex-wrap: wrap; opacity: 0; transition: opacity 0.5s ease 1.2s;}
         .terminal-card.typed .tech-row { opacity: 1; }
         .tech-tag {
-            font-size: 0.7rem; padding: 4px 10px; border-radius: 4px;
-            background: rgba(0,0,0,0.5); color: var(--accent); font-family: var(--font-code);
-            border: 1px solid rgba(59, 130, 246, 0.3);
+            font-size: 0.65rem; padding: 3px 8px; border-radius: 3px;
+            background: #0d0f13; color: var(--text-main); font-family: var(--font-code);
+            border: 1px solid rgba(0, 242, 254, 0.1);
         }
 
-        .terminal-card:hover { transform: translateY(-8px); box-shadow: var(--neo-out-hover); border-color: rgba(255,255,255,0.2); }
+        .terminal-card:hover { transform: translateY(-6px); box-shadow: var(--neo-out-hover); border-color: rgba(0, 242, 254, 0.15); }
         .terminal-card.clicked { animation: breatheClick 0.4s ease-in-out; }
 
         @keyframes breatheClick {
             0% { transform: scale(1); box-shadow: var(--neo-out-hover); }
-            50% { transform: scale(0.96); box-shadow: inset 0 0 20px rgba(0,0,0,0.8); }
+            50% { transform: scale(0.96); box-shadow: var(--neo-in-deep); }
             100% { transform: scale(1); box-shadow: var(--neo-out); }
         }
 
         /* =========================================
            Visual Arts Gallery
            ========================================= */
-        .image-grid { column-count: 3; column-gap: 1.5rem; }
+        .image-grid { column-count: 3; column-gap: 1.2rem; }
         .img-wrapper {
-            break-inside: avoid; margin-bottom: 1.5rem;
-            box-shadow: var(--neo-out); padding: 8px; border-radius: 12px;
+            break-inside: avoid; margin-bottom: 1.2rem;
+            box-shadow: var(--neo-out); padding: 6px; border-radius: 10px;
             cursor: pointer; transition: transform 0.3s; background: var(--surface);
-            border: var(--glass-border); backdrop-filter: blur(10px);
         }
-        .img-wrapper:hover { transform: scale(1.03); box-shadow: var(--neo-out-hover); border-color: rgba(255,255,255,0.2); }
+        .img-wrapper:hover { transform: scale(1.02); box-shadow: var(--neo-out-hover); }
         .img-wrapper img {
             width: 100%; height: auto; display: block;
-            border-radius: 6px; box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
-            filter: grayscale(30%) contrast(1.1); transition: 0.4s;
+            border-radius: 5px; box-shadow: var(--neo-in);
+            filter: grayscale(40%) contrast(1.1); transition: 0.4s;
         }
         .img-wrapper:hover img { filter: grayscale(0%); }
 
@@ -417,48 +406,46 @@
         }
         .achieve-card {
             background: var(--surface);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            padding: 20px 25px;
+            border-radius: 12px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             gap: 20px;
             box-shadow: var(--neo-out);
-            border: var(--glass-border);
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.02);
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .achieve-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--neo-out-hover);
-            border-color: rgba(255,255,255,0.2);
+            border-color: rgba(0, 242, 254, 0.15);
         }
         .rank-badge {
             font-family: var(--font-code);
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             flex-shrink: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             border-radius: 50%;
-            background: rgba(0,0,0,0.4);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
+            background: var(--bg-color);
+            box-shadow: var(--neo-in);
         }
-        .rank-badge.gold { color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.4); }
-        .rank-badge.silver { color: #e5e7eb; text-shadow: 0 0 15px rgba(229, 231, 235, 0.4); }
-        .rank-badge.bronze { color: #d97706; text-shadow: 0 0 15px rgba(217, 119, 6, 0.4); }
-        .achieve-info h3 { font-size: 1.05rem; color: #ffffff; line-height: 1.4; }
+        .rank-badge.gold { color: #ffd700; text-shadow: 0 0 10px rgba(255,215,0,0.4); }
+        .rank-badge.silver { color: #c0c0c0; text-shadow: 0 0 10px rgba(192,192,192,0.4); }
+        .rank-badge.bronze { color: #cd7f32; text-shadow: 0 0 10px rgba(205,127,50,0.4); }
+        .achieve-info h3 { font-size: 0.95rem; color: var(--text-main); line-height: 1.4; }
 
         /* =========================================
            Modals
            ========================================= */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: rgba(3, 4, 6, 0.85); backdrop-filter: blur(12px);
+            background: rgba(18, 20, 26, 0.9); backdrop-filter: blur(8px);
             z-index: 2000; display: flex; justify-content: center; align-items: center;
             opacity: 0; visibility: hidden; transition: all 0.3s ease;
         }
@@ -466,37 +453,37 @@
 
         .modal-window {
             width: 90%; max-width: 850px; max-height: 85vh;
-            background: var(--bg-color); border-radius: 12px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); overflow: hidden;
+            background: var(--bg-color); border-radius: 10px;
+            box-shadow: var(--neo-out-hover); overflow: hidden;
             display: flex; flex-direction: column;
             transform: scale(0.95) translateY(20px); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: var(--glass-border);
+            border: 1px solid rgba(0, 242, 254, 0.1);
         }
         .modal-overlay.active .modal-window { transform: scale(1) translateY(0); }
 
-        .modal-content { padding: 35px; overflow-y: auto; background: var(--surface); flex-grow: 1; }
+        .modal-content { padding: 30px; overflow-y: auto; box-shadow: var(--neo-in-deep); margin: 12px; border-radius: 6px; }
         
-        .modal-title { font-size: 1.8rem; color: #ffffff; margin-bottom: 6px; }
-        .modal-subtitle { font-family: var(--font-code); color: var(--accent); margin-bottom: 30px; font-size: 0.9rem; }
+        .modal-title { font-size: 1.6rem; color: var(--accent); margin-bottom: 4px; }
+        .modal-subtitle { font-family: var(--font-code); color: var(--text-muted); margin-bottom: 25px; font-size: 0.85rem; }
         
-        .report-block { margin-bottom: 25px; }
-        .report-block h4 { color: #ffffff; margin-bottom: 10px; font-size: 1.1rem; border-left: 3px solid var(--accent); padding-left: 12px; }
-        .report-block p, .report-block ul { color: var(--text-muted); font-size: 0.95rem; text-align: justify; line-height: 1.8; }
+        .report-block { margin-bottom: 22px; }
+        .report-block h4 { color: #fff; margin-bottom: 8px; font-size: 1.05rem; border-left: 2px solid var(--accent); padding-left: 8px; }
+        .report-block p, .report-block ul { color: var(--text-muted); font-size: 0.9rem; text-align: justify; line-height: 1.7; }
 
-        .modal-actions { margin-top: 35px; display: flex; gap: 15px; }
+        .modal-actions { margin-top: 25px; display: flex; gap: 12px; }
         .btn-neo {
-            padding: 12px 24px; border-radius: 6px; text-decoration: none;
-            color: #ffffff; font-family: var(--font-code); font-size: 0.9rem;
-            background: rgba(255,255,255,0.05); border: var(--glass-border); transition: 0.3s; cursor: pointer;
+            padding: 10px 20px; border-radius: 5px; text-decoration: none;
+            color: var(--text-main); font-family: var(--font-code); font-size: 0.85rem;
+            background: var(--surface); box-shadow: var(--neo-out); transition: 0.3s; border: 1px solid transparent; cursor: pointer;
         }
-        .btn-neo:hover { background: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .btn-neo:hover { box-shadow: var(--neo-in); transform: translateY(2px); border-color: rgba(0, 242, 254, 0.2); color: var(--accent);}
 
         /* Custom Framed Lightbox */
         .lightbox-frame {
             background: var(--surface);
-            border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9), 0 0 30px rgba(255,255,255,0.05);
-            border: var(--glass-border);
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 20px var(--accent-glow);
+            border: 1px solid rgba(0, 242, 254, 0.15);
             display: flex; flex-direction: column;
             max-width: 90vw; max-height: 90vh;
             transform: scale(0.9) translateY(20px);
@@ -506,20 +493,20 @@
             transform: scale(1) translateY(0); opacity: 1;
         }
         .lightbox-frame .img-container {
-            padding: 15px; overflow: hidden; display: flex; justify-content: center; align-items: center;
+            padding: 10px; overflow: hidden; display: flex; justify-content: center; align-items: center;
         }
         .lightbox-frame img {
             max-width: 100%;
-            max-height: calc(90vh - 70px);
-            object-fit: contain; border-radius: 8px;
+            max-height: calc(90vh - 60px);
+            object-fit: contain; border-radius: 6px;
         }
 
         /* =========================================
-           Footer
+           Footer & Responsive
            ========================================= */
-        footer { padding: 3rem 5%; text-align: center; margin-top: 3rem; background: rgba(0,0,0,0.5); border-top: var(--glass-border); }
-        .footer-logo { font-size: 1.2rem; font-family: var(--font-code); color: #ffffff; margin-bottom: 0.6rem;}
-        .footer-text { font-size: 0.85rem; color: var(--text-muted); }
+        footer { padding: 2.5rem 5%; text-align: center; margin-top: 2rem; box-shadow: var(--neo-in-deep); }
+        .footer-logo { font-size: 1.2rem; font-family: var(--font-code); color: var(--text-muted); margin-bottom: 0.4rem;}
+        .footer-text { font-size: 0.8rem; color: var(--text-muted); }
 
         /* =========================================
            Tightly Optimized Mobile Breakpoints
@@ -527,66 +514,65 @@
         @media (max-width: 900px) { .image-grid { column-count: 2; } }
         
         @media (max-width: 800px) {
-            #hero { flex-direction: column; text-align: center; padding-top: 120px; gap: 3.5rem;}
+            #hero { flex-direction: column; text-align: center; padding-top: 100px; gap: 2.5rem;}
             .hero-text { align-items: center; text-align: center; }
             .card { margin: 0 auto; }
         }
         
         @media (max-width: 768px) {
-            .nav-btn.left { left: 5px; }
-            .nav-btn.right { right: 5px; }
+            .nav-btn.left { left: 0px; }
+            .nav-btn.right { right: 0px; }
         }
         
         @media (max-width: 600px) {
-            section { padding: 70px 5%; }
+            section { padding: 50px 5%; }
             
             /* Typography and Spacing Tweaks */
-            .section-heading { font-size: 1.6rem; margin-bottom: 3rem; }
-            .dev-title { font-size: 0.95rem; margin-bottom: 1.2rem; }
-            .hero-bio { font-size: 0.95rem; padding: 0 15px; margin-bottom: 2rem; line-height: 1.6;}
+            .section-heading { font-size: 1.4rem; margin-bottom: 2.5rem; }
+            .dev-title { font-size: 0.85rem; margin-bottom: 1rem; }
+            .hero-bio { font-size: 0.85rem; padding: 0 10px; margin-bottom: 1.5rem; line-height: 1.5;}
             
             /* Fixing the Name Overflow & Typing alignment */
-            .type-name-container { white-space: nowrap; border-right: none; margin-bottom: 1rem; display: flex; justify-content: center; width: 100%;}
+            .type-name-container { white-space: nowrap; border-right: none; margin-bottom: 0.8rem; display: flex; justify-content: center; width: 100%;}
             .type-name-container h1.dev-name { 
                 white-space: nowrap; 
-                font-size: clamp(1.5rem, 6vw, 2.2rem) !important; 
-                border-right: 0.1em solid var(--accent); 
+                font-size: clamp(1.2rem, 5.5vw, 1.8rem) !important; 
+                border-right: 0.15em solid var(--accent); /* Keep caret alive */
                 animation: blink-caret 0.75s step-end infinite;
             }
 
-            .social-dock { padding: 10px 20px; gap: 1rem; }
-            .social-btn { width: 38px; height: 38px; font-size: 1.15rem; }
+            .social-dock { padding: 8px 15px; gap: 0.8rem; }
+            .social-btn { width: 34px; height: 34px; font-size: 1.1rem; }
             
             /* Profile Card sizing for mobile */
-            .card { width: min(280px, calc(100vw - 3rem)); }
+            .card { width: min(260px, calc(100vw - 3rem)); }
             
             /* Grid and Padding adjustments */
-            .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-            .skill-box { padding: 1.5rem; }
-            .skill-box h3 { font-size: 1rem; margin-bottom: 1.2rem;}
-            .neo-pill { font-size: 0.8rem; padding: 6px 12px; }
+            .skills-grid { grid-template-columns: 1fr; gap: 1.2rem; }
+            .skill-box { padding: 1.3rem; }
+            .skill-box h3 { font-size: 0.95rem; margin-bottom: 1rem;}
+            .neo-pill { font-size: 0.75rem; padding: 4px 10px; }
             
-            /* Projects Carousel - Peek-a-boo layout for mobile */
-            .project-carousel { gap: 1rem; padding: 10px 5vw 30px; }
-            .terminal-card { min-width: 85vw; max-width: 85vw; }
-            .terminal-body { padding: 18px; }
-            .terminal-card h3 { font-size: 1.1rem; margin-bottom: 6px;}
-            .terminal-card p.desc { font-size: 0.85rem; }
+            /* Projects */
+            .terminal-card { min-width: 260px; max-width: 260px; }
+            .terminal-body { padding: 14px; }
+            .terminal-card h3 { font-size: 1rem; margin-bottom: 4px;}
+            .terminal-card p.desc { font-size: 0.8rem; }
             
             /* Visual Arts */
-            .image-grid { column-count: 2; column-gap: 1rem; }
-            .img-wrapper { margin-bottom: 1rem; padding: 6px; border-radius: 10px;}
+            .image-grid { column-count: 2; column-gap: 0.8rem; }
+            .img-wrapper { margin-bottom: 0.8rem; padding: 4px; border-radius: 8px;}
             
             /* Achievements */
-            .achievements-grid { gap: 1.2rem; }
-            .achieve-card { padding: 15px 20px; gap: 15px; flex-direction: column; text-align: center; }
-            .rank-badge { width: 50px; height: 50px; font-size: 1.1rem; margin-bottom: 5px; }
-            .achieve-info h3 { font-size: 0.95rem; }
+            .achievements-grid { gap: 1rem; }
+            .achieve-card { padding: 12px 15px; gap: 15px; }
+            .rank-badge { width: 45px; height: 45px; font-size: 1rem; }
+            .achieve-info h3 { font-size: 0.85rem; }
             
             /* Modals */
-            .modal-content { padding: 20px; }
-            .report-block h4 { font-size: 1rem; }
-            .report-block p, .report-block ul { font-size: 0.9rem; }
+            .modal-content { padding: 15px; }
+            .report-block h4 { font-size: 0.95rem; }
+            .report-block p, .report-block ul { font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -684,7 +670,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'progene')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - AI_Genomics</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - AI_Genomics</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="ProGene AI"></span><span class="cursor"></span></h3>
@@ -698,7 +684,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'pneumonia')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - CV_Med</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - CV_Med</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Pneumonia Diagnosis"></span><span class="cursor"></span></h3>
@@ -712,7 +698,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'lifescience')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - FullStack</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - FullStack</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Educational App"></span><span class="cursor"></span></h3>
@@ -726,7 +712,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'estatix')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - RealEstate</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - RealEstate</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Online Marketplace"></span><span class="cursor"></span></h3>
@@ -740,7 +726,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'ecofloors')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - Sustainability</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Sustainability</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Eco Tracking Platform"></span><span class="cursor"></span></h3>
@@ -754,7 +740,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'auctora')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - Mobile</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Mobile</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Auction Application"></span><span class="cursor"></span></h3>
@@ -768,7 +754,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'sentiment')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - NLP_AI</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - NLP_AI</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Movie Sentiment"></span><span class="cursor"></span></h3>
@@ -782,7 +768,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'sales')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - Data_Viz</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - Data_Viz</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Sales Analytics"></span><span class="cursor"></span></h3>
@@ -796,7 +782,7 @@
                     <div class="terminal-card" onclick="handleProjectClick(this, 'portfolio')">
                         <div class="terminal-header">
                             <div class="mac-dot red"></div><div class="mac-dot yellow"></div><div class="mac-dot green"></div>
-                            <span class="code-font" style="color:#aaa; font-size:0.75rem; margin-left:10px;">bash - WebDev</span>
+                            <span class="code-font" style="color:#555; font-size:0.7rem; margin-left:8px;">bash - WebDev</span>
                         </div>
                         <div class="terminal-body">
                             <h3><span class="typewriter-text" data-type-text="Portfolio Website"></span><span class="cursor"></span></h3>
@@ -893,7 +879,7 @@
                 <div class="mac-dot red" onclick="closeModal('project-modal')" style="cursor:pointer;" title="Close"></div>
                 <div class="mac-dot yellow"></div>
                 <div class="mac-dot green"></div>
-                <span class="code-font" style="color:#aaa; font-size:0.8rem; margin-left:12px;">Execution_Report.md</span>
+                <span class="code-font" style="color:#777; font-size:0.7rem; margin-left:10px;">Execution_Report.md</span>
             </div>
             <div class="modal-content" id="report-content">
                 </div>
@@ -902,11 +888,11 @@
 
     <div id="image-modal" class="modal-overlay" onclick="closeModalOutside(event, 'image-modal')">
         <div class="lightbox-frame">
-            <div class="terminal-header" style="width: 100%; border-radius: 12px 12px 0 0;">
+            <div class="terminal-header" style="width: 100%; border-radius: 10px 10px 0 0; background: #121418;">
                 <div class="mac-dot red" onclick="closeModal('image-modal')" style="cursor:pointer;"></div>
                 <div class="mac-dot yellow"></div>
                 <div class="mac-dot green"></div>
-                <span class="code-font" style="color:#aaa; font-size:0.8rem; margin-left:12px;">Image_Viewer.exe</span>
+                <span class="code-font" style="color:#777; font-size:0.7rem; margin-left:10px;">Image_Viewer.exe</span>
             </div>
             <div class="img-container">
                 <img id="lightbox-img" src="" alt="View">
@@ -933,13 +919,14 @@
         const drops = [];
         for(let x = 0; x < columns; x++) drops[x] = 1; 
 
+        // Export coordinates globally so the profile canvas can "feel" the matrix drops
         window.matrixCtxObj = { drops: drops, fontSize: fontSize, columns: columns };
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(3, 4, 6, 0.15)'; 
+            ctx.fillStyle = 'rgba(22, 24, 29, 0.15)'; 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            ctx.fillStyle = 'rgba(59, 130, 246, 0.45)'; 
+            ctx.fillStyle = 'rgba(0, 242, 254, 0.45)'; 
             ctx.font = fontSize + 'px monospace';
             
             for(let i = 0; i < drops.length; i++) {
@@ -1050,19 +1037,23 @@
                     main.classList.add('loaded');
                     initObserver();
                     
+                    // Specific GSAP Entrance for the Interactive Profile Dock without 3D rotation
                     gsap.fromTo("#profile-dock", 
                         { scale: 0.8, opacity: 0, y: 40 }, 
                         { scale: 1, opacity: 1, y: 0, duration: 1.5, ease: "expo.out", onComplete: () => {
+                             // Apply CSS levitation loop after entrance
                              document.getElementById('profile-dock').style.animation = 'levitate 6s ease-in-out infinite';
                         }}
                     );
 
+                    // Initialize VanillaTilt explicitly WITHOUT the profile dock to keep it float-only
                     setTimeout(() => {
                         VanillaTilt.init(document.querySelectorAll(".terminal-card, .skill-box, .achieve-card"), {
-                            max: 5, speed: 400, glare: true, "max-glare": 0.15
+                            max: 5, speed: 400, glare: true, "max-glare": 0.1
                         });
                     }, 1500);
                     
+                    // Unified Universal Typing Animation 
                     const nameEl = document.getElementById('typed-name');
                     const fullName = "<Deepan_Pramanick />";
                     let i = 0;
@@ -1286,7 +1277,7 @@
         }
 
         function openAchievement(imgSrc) {
-            const fallback = `https://via.placeholder.com/600x400/1b1d24/3b82f6?text=Achievement+Image`;
+            const fallback = `https://via.placeholder.com/600x400/1b1d24/00f2fe?text=Achievement+Image`;
             document.getElementById('lightbox-img').src = imgSrc;
             document.getElementById('lightbox-img').onerror = function() { this.src = fallback; };
             document.getElementById('image-modal').classList.add('active');
@@ -1306,10 +1297,11 @@
 
         /* =========================================
            7. Advanced Interactive Photo Mechanism
+           (High Frequency Matrix Ripple Edition)
            ========================================= */
         (() => {
             'use strict';
-            const FONT_PX      = 2;        
+            const FONT_PX      = 2;       
             const CYCLE_MS     = 10000;   
             const TRANSFORM_MS = 3200;    
             const REVERSE_MS   = 2800;    
@@ -1380,7 +1372,7 @@
 
               const o2  = new OffscreenCanvas(RW, RH);
               const o2c = o2.getContext('2d');
-              o2c.fillStyle   = '#030406';
+              o2c.fillStyle   = '#06080d';
               o2c.fillRect(0, 0, RW, RH);
               o2c.font         = `bold ${Math.ceil(FONT_R)}px "Courier New"`;
               o2c.textBaseline = 'top';
@@ -1394,8 +1386,8 @@
 
                   const lum = Math.pow((R * 0.299 + G * 0.587 + B * 0.114) / 255, 0.72);
                   const cr = Math.floor(Math.pow(lum, 1.9) * 0) | 0;
-                  const cg = Math.floor(lum * 130) | 0; 
-                  const cb = Math.floor(lum * 246) | 0; 
+                  const cg = Math.floor(lum * 242) | 0; 
+                  const cb = Math.floor(lum * 254) | 0; 
                   const ch = lum > 0.35 ? '1' : '0';
 
                   o2c.fillStyle = `rgb(${cr >> 3},${cg >> 3},${cb >> 3})`;
@@ -1446,12 +1438,14 @@
               const glitchSeed = glitching ? Math.floor(performance.now() / 40) : 0;
               const glitchStrength = glitching ? glitchT * 0.85 : 0;
 
+              // Pre-calculate active background matrix drops interacting with the card's vertical footprint
               const rect = card.getBoundingClientRect();
               const activeMatrixDrops = {};
               if (window.matrixCtxObj) {
                   const m = window.matrixCtxObj;
                   for(let c = 0; c < m.columns; c++) {
                       const dropYScreen = m.drops[c] * m.fontSize;
+                      // Expanded check radius to catch the matrix "trail" passing over the profile
                       if (dropYScreen >= rect.top - 100 && dropYScreen <= rect.bottom + 400) {
                           activeMatrixDrops[c] = dropYScreen;
                       }
@@ -1471,8 +1465,9 @@
                 for (let px = 0; px < RW; px++) {
                   let piRead = (py * RW + px) * 4;
 
+                  // ---- HIGH FREQUENCY MATRIX POOL REFRACTION EFFECT ----
                   let matrixJitterX = 0;
-                  const BORDER = 55; 
+                  const BORDER = 55; // Slightly wider border interaction
                   const edgeDistX = Math.min(px, RW - 1 - px);
                   const edgeDistY = Math.min(py, RH - 1 - py);
                   
@@ -1486,10 +1481,12 @@
                                 const screenY = rect.top + (py / RH) * rect.height;
                                 const distance = dropYScreen - screenY;
                                 
+                                // Trigger heavily when leading edge approaches, and sustain through the "trail" (up to 300px above)
                                 if (distance > -80 && distance < 300) { 
                                      const intensity = 1 - (Math.min(edgeDistX, edgeDistY) / BORDER);
                                      const trailFalloff = 1 - Math.max(0, distance / 300);
                                      
+                                     // High frequency threshold
                                      if (Math.random() > 0.1) {
                                         matrixJitterX = (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 45 * intensity * trailFalloff);
                                      }
@@ -1502,6 +1499,7 @@
                       const readX = Math.max(0, Math.min(RW - 1, px + matrixJitterX));
                       piRead = (py * RW + readX) * 4;
                   }
+                  // ----------------------------------------
 
                   let fA = 1;
                   if (trans) {
